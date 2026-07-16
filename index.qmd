@@ -1,661 +1,541 @@
 ---
-title: What's the Weight?
+title: "What's the Weight?"
 subtitle: |
-  Estimating Controlled Outcome Differences in \
-  Complex Surveys for Health Disparities Research
-author: 
-  name: Stephen Salerno, PhD
-  affiliation: Washington University in St. Louis
+  Estimating Controlled Outcome Differences in Complex Surveys \
+  for Health Disparities Research
+author:
+  - name: "Stephen Salerno"
+    affiliation: "Washington University in St. Louis"
 date: 2026-07-17
-date-format: "MMMM D, YYYY"
-bibliography: ref.bib
-csl: nature.csl
-
+date-format: "MMMM DD, YYYY"
 format:
   revealjs:
     theme: [default, styles.scss]
-    logo: images/theme/logo.png
-    footer: "Joint HPSS and SRMS Webinar"
     slide-number: true
-    hash: true
-    navigation-mode: linear
-    transition: fade
-    background-transition: fade
+    # transition: fade
+    # background-transition: none
     incremental: true
-    center: true
     width: 1280
     height: 720
-    preview-links: true
-    plugins: [search, zoom, chalkboard]
-    code-line-numbers: true
-    embed-resources: true
-    
-resources:
-  - images/
-    
-title-slide-attributes:
-  data-background-image: "images/theme/bg1.png"
-  data-background-size: "auto 100%"
-  data-background-position: "right"
-
-execute:
-  echo: true
-  warning: false
-  message: false
+    margin: 0.08
+    controls: true
+    progress: true
+    center: false
+    footer: |
+      SRMS & HPSS Webinar: INTERSECTIONS - NHANES - 
+      Perspectives of Survey Methodology and Health Policy
 ---
 
-## First, Some Acknowledgements {.theme-bg3}
+## QR Code for These Slides
 
-### Funded by the Sloan Precision Oncology Technology Dissemination Award
+![](images/qr/slides_qr.png){.r-stretch fig-align="center"}
 
-::: {.people-row}
+## Our Group {.center}
 
-::: {.person}
+::: {.collab-grid}
+::: {.collab}
+![](images/people/emily.jpg)
+**Emily K. Roberts**  
+University of Iowa
+:::
 
-![](images/people/awan.jpg){.headshot}
+::: {.collab}
+![](images/people/belinda.jpg)
+**Belinda L. Needham**  
+University of Michigan
+:::
 
-**Awan Afiaz, MS**  
-*PhD Student*  
-Public Health Sciences, Fred Hutch  
-Biostatistics, University of Washington
+::: {.collab}
+![](images/people/tyler.jpg)
+**Tyler H. McCormick**  
+University of Washington
+:::
+
+::: {.collab}
+![](images/people/fan.jpeg)
+**Fan Li**  
+Yale University
+:::
+
+::: {.collab}
+![](images/people/bhramar.jpeg)
+**Bhramar Mukherjee**  
+Yale University
+:::
+
+::: {.collab}
+![](images/people/xu.jpg)
+**Xu Shi**  
+University of Michigan
+:::
+:::
+
+# Background
+
+## What are Telomeres?
+
+### Regions of DNA on chromosomes that guard against cell death {.fragment}
+
+![[Like the protective "caps" on the ends of shoelaces]{.caption}](images/shoelace_bg.png){.fragment .centered-figure-img width="70%" fig-align="center"}
+
+## Telomeres Shorten As Cells Divide
+
+### Shortening associated with cardiometabolic outcomes {.fragment}
+
+![[Affected by age, sex, race/ethnicity, genetics, SES, environment, psychosocial stress, ...]{.caption}](images/telomeres2_bg.png){.fragment .centered-figure-img width="70%" fig-align="center"}
+
+## Relationship with Race and SES
+
+### Longer telomeres in Black individuals has been described as a paradox {.fragment}
+
+![[But comparable length has been observed in populations with similar SES]{.caption}](images/compare_bg.png){.fragment .centered-figure-img width="70%" fig-align="center"}
+
+# Motivation
+
+## Which is a Meaningful Health Policy Question?
+
+<br>
+
+:::: {.columns}
+::: {.column width="45%"}
+### Descriptive Comparison {.fragment}
+
+[How different is mean telomere length between Black and White adults in the United States?]{.fragment}
+:::
+
+:::: {.column width="8%"}
+[vs.]{.fragment text-align="left"}
+::::
+
+::: {.column width="47%"}
+### Controlled Comparison {.fragment}
+
+[With balanced socioeconomic factors and a nationally representative sample, would the difference remain?]{.fragment}
+:::
+::::
+
+<br>
+
+[**Note:** Race is not 'manipulable' like a traditional treatment/exposure]{.fragment}
+
+## Motivating Question {.center}
+
+<br>
+
+### If we could hypothetically [*balance*]{style="color: #003865;"} SES between Black and White individuals in a [*nationally representative sample*]{style="color: #003865;"}, would we still see significant [*Black/White differences*]{style="color: #003865;"} in telomere length? {.fragment text-align="center"}
+
+## What is Our Nationally Representative Sample?
+
+### National Health and Nutrition Examination Survey {.fragment}
+
+<br>
+
+![[Rich data from interviews, physical examinations, laboratory tests, ...]{.caption}](images/nhanes_bg.png){.fragment .centered-figure-img width="70%" fig-align="center"}
+
+## NHANES Stratified, Clustered Sampling Design
+
+### Primary sampling units (counties) and demographic-specific strata {.fragment}
+
+<br>
+
+![[Oversamples non-Hispanic Black participants and participants below 130% of the federal poverty limit]{.caption}](images/sampling_bg.png){.fragment .centered-figure-img width="60%" fig-align="center"}
+
+## Why does This Make Our Question Challenging?
+
+### Two potential sources of bias {.fragment}
+
+1. **Confounding:** Race is associated with both SES and telomere length, and SES is associated with telomere length
+2. **Selection:** NHANES intentionally oversamples based (in part) on race and SES
+
+![[Conceptual Diagram]{.caption}](images/dag_bg.png){.fragment width="50%" fig-align="center"}
+
+## Notation
+
+### Survey of $n$ participants from a population of $N$ individuals {.fragment}
+
+:::: {.columns}
+::: {.column width="50%"}
+
+- $\class{highlight-prop}{\ A\ }$: Race ($1=$ Black, $0=$ White)
+- $\class{highlight-gray}{\ \boldsymbol{X}\ }$: Covariates (SES)
+- $\class{highlight-green}{\ Y\ }$: Outcome (log Telomere Length)
+- $\class{highlight-selection}{\ S\ }$: Sample Selection Indicator
+- $\mathcal{P}$: Population distribution of $(\class{highlight-prop}{A},\ \class{highlight-gray}{\boldsymbol{X}},\ \class{highlight-green}{Y})$
+- $\mathcal{Q}$: Sample distribution given $\class{highlight-selection}{S = 1}$
 
 :::
 
-::: {.person}
+::: {.column width="50%"}
+![](images/dag_bg.png){.fragment .centered-figure-img width="100%" fig-align="center"}
+:::
+::::
 
-![](images/people/barbara.jpg){.headshot}
+[If selection depends on both $\class{highlight-prop}{\ A\ }$ and $\class{highlight-gray}{\ \boldsymbol{X}\ }$, the final estimand requires a coherent factorization of the ***selection*** and ***group membership*** probabilities]{.fragment}
 
-**Barbara Lam, MD**  
-*Assistant Professor*  
-Clinical Research Division, Fred Hutch  
-Hematology-Oncology, UW Medicine  
+## What is Being Balanced/Weighted?
 
+<br>
+
+:::: {.columns}
+::: {.column width="50%"}
+### Within-Sample Covariate Balance {.fragment}
+
+[Use a propensity score for group membership:]{.fragment}
+
+[$$\class{highlight-prop}{e_a(\boldsymbol{X})} = \Pr(\class{highlight-prop}{A = a} \mid\ \class{highlight-gray}{\boldsymbol{X}})$$]{.fragment}
+
+[**Purpose:** Make covariate distributions comparable between groups.]{.fragment}
 :::
 
-::: {.person}
+::: {.column width="50%"}
+### Population Generalizability {.fragment}
 
-![](images/people/jeff.jpeg){.headshot}
+[Use the selection mechanism (e.g., survey weights):]{.fragment}
 
-**Jeff Leek, PhD**    
-*Vice President and Chief Data Officer*  
-*Professor, Biostatistics Program*  
-*J. Orin Edson Foundation Endowed Chair*  
-Public Health Sciences, Fred Hutch  
-Biostatistics, University of Washington 
+[$$\class{highlight-selection}{\pi(A, \boldsymbol{X})} = \Pr(\class{highlight-selection}{S=1} \mid \class{highlight-prop}{A},\ \class{highlight-gray}{\boldsymbol{X}})$$]{.fragment}
 
+[**Purpose:** Weight the sample to the target population.]{.fragment}
+:::
+::::
+
+## Questions:
+
+<br>
+
+- How do we incorporate these propensity and/or survey weights?
+- Do we survey weight the propensity model? 
+
+## Answer: 
+
+### It depends on the *design* and how we factorize this *joint probability* {.fragment}
+
+[$$\Pr(\class{highlight-selection}{S=1},\ \class{highlight-prop}{A=a} \mid\ \class{highlight-gray}{\boldsymbol{X}})$$]{.fragment}
+
+<br>
+
+:::: {.columns}
+::: {.fragment .column width="50%"}
+### Factorization 1
+
+$$\Pr(\class{highlight-prop}{A=a} \mid\ \class{highlight-gray}{\boldsymbol{X}}) \times \Pr(\class{highlight-selection}{S=1} \mid\ \class{highlight-prop}{A=a},\ \class{highlight-gray}{\boldsymbol{X}})$$
+$$= \class{highlight-prop}{e_a^{\mathcal{P}}(\boldsymbol{X})}  \times \class{highlight-selection}{\pi(A, \boldsymbol{X})}$$
+
+Population (Survey-Weighted) Propensity Score $\times$ Group-Specific Selection Probability
 :::
 
+::: {.fragment .column width="50%"}
+### Factorization 2
+
+$$\Pr(\class{highlight-prop}{A=a} \mid\ \class{highlight-gray}{\boldsymbol{X}},\ \class{highlight-selection}{S=1}) \times \Pr(\class{highlight-selection}{S=1} \mid\ \class{highlight-gray}{\boldsymbol{X}})$$
+
+$$= \class{highlight-prop}{e_a^{\mathcal{Q}}(\boldsymbol{X})}  \times \class{highlight-selection}{\pi(\boldsymbol{X})}$$
+
+Within-Sample Propensity Score $\times$ Marginalized Selection Probability
 :::
+::::
 
-## Our Motivation {.theme-bg3}
+# Estimation
 
-### Telomere Length and its Relationship with Race and SES
+## Target of Inference
 
-::: {.columns}
-::: {.column width="60%"}
+### The ***average controlled difference (ACD)*** in telomere length {.fragment}
 
-* Regions of DNA at the ends of chromosomes that protect against cell death
-* Shortening associated w/ cardiometabolic outcomes 
-* Affected by age, sex, race/ethnicity, genetics, 
-* SES, environment, psychosocial stress, ...
-* Longer telomeres in Black individuals (paradox)
+<br>
 
 ::: {.fragment}
-*BUT*
-:::
+For group level $a \in \{0,1\}$:
 
-* Comparable length in populations w/ similar SES
+$$\mu(a) = \mathbb{E}_{\mathcal{P}}\left[\mathbb{E}(\class{highlight-green}{Y} \mid\ \class{highlight-prop}{A = a},\ \class{highlight-gray}{\boldsymbol{X}})\right] = \mathbb{E}_{\mathcal{Q}}\left[\class{highlight-green}{g_a(\boldsymbol{X})}\ \class{highlight-selection}{w(\boldsymbol{X})}\right],$$
 
+where $\class{highlight-green}{g_a(\boldsymbol{X})} = \mathbb{E}_{\mathcal{Q}}(\class{highlight-green}{Y} \mid\ \class{highlight-prop}{A = a},\ \class{highlight-gray}{\boldsymbol{X}})$ and $\class{highlight-selection}{w(\boldsymbol{X})}$ is a known selection factor, we have
+$$\text{ACD} = \mu(1) - \mu(0)$$
 :::
-::: {.column width="40%"}
 
 <br>
-
-![[Image Generated using GPT 5.2]{.caption}](images/telomeres.png){text-align="center"}
-
-:::
-:::
-
-# "If we could hypothetically balance SES between Black and White individuals in a nationally representative sample, would we still see significant Black/White differences in telomere length?" {.theme-bg2}
-
-::: footer
-:::
-
-## Our Data {.theme-bg3}
-
-### National Health and Nutrition Examination Survey
-
-::: {.columns}
-::: {.column width="50%"}
-
-* Nationally representative survey by the CDC
-* Rich data from interviews, physical 
-* examinations, laboratory tests, …
-* Stratified, clustered complex design:
-* Primary sampling units (counties) 
-* Drawn from demographic-specific strata
-* Oversamples non-Hispanic Black participants and ≤ 130% poverty limit
-
-:::
-::: {.column width="50%"}
-
-![[Image Generated using GPT 5.2]{.caption}](images/nhanes-sampling.png)
-
-:::
-:::
-
-## What inspired *scorcher's* design {.theme-bg3}
-
-### And where/why we deviate
-
-<br>
-
-::: {layout="[[1,1],[1,1],[1,1],[1,1]]"}
-
-**Inspired by:**
-
-**We are creating:**
-
-::: {.fragment fragment-index="1"}
-
-<br>
-
-The [Keras](https://keras.io/) Functional API in Python[@gulli2017deep]
-
-:::
-
-::: {.fragment fragment-index="2"}
-
-<br>
-
-An API for functional model graphs, multi-input/output models, nonlinear topologies
-
-:::
-
-::: {.fragment fragment-index="3"}
-
-<br>
-
-The [keras3](https://keras3.posit.co/) R package[@chollet2022deep]
-
-:::
-
-::: {.fragment fragment-index="4"}
-
-<br>
-
-Tidy, pipable functions that fit naturally into R-based analysis pipelines
-
-:::
-
-::: {.fragment fragment-index="5"}
-
-<br>
-
-The [torch](https://torch.mlverse.org/) R package ([mlverse](https://www.mlverse.org/))[@chowdhry2025deep]
-
-:::
-
-::: {.fragment fragment-index="6"}
-
-<br>
-
-A package that is 100% native to R, without needing Python or reticulate
-
-:::
-
-:::
-
-## Write models like sentences via composable functions {.theme-bg3}
-
-*scorcher* lets you develop models by focusing on 
-*what the model should do*, not *how to write code for it*
-
-<br>
-
-::: {.scorch-flow}
-
-::: {.flow-pair .fragment data-fragment-index="1"}
-::: {.flow-text}
-Load the data
-:::
-::: {.flow-code}
-`scorch_dataloader()`
-:::
-:::
-
-::: {.flow-step .fragment data-fragment-index="2"}
-::: {.flow-text}
-then
-:::
-::: {.flow-arrow}
-|>
-:::
-:::
-
-::: {.flow-pair .fragment data-fragment-index="3"}
-::: {.flow-text}
-add layers
-:::
-::: {.flow-code}
-`scorch_layer()`
-:::
-:::
-
-::: {.flow-step .fragment data-fragment-index="4"}
-::: {.flow-text}
-then
-:::
-::: {.flow-arrow}
-|>
-:::
-:::
-
-::: {.flow-pair .fragment data-fragment-index="5"}
-::: {.flow-text}
-compile the model
-:::
-::: {.flow-code}
-`compile_scorch()`
-:::
-:::
-
-::: {.flow-step .fragment data-fragment-index="6"}
-::: {.flow-text}
-then
-:::
-::: {.flow-arrow}
-|>
-:::
-:::
-
-::: {.flow-pair .fragment data-fragment-index="7"}
-::: {.flow-text}
-fit the model
-:::
-::: {.flow-code}
-`fit_scorch()`
-:::
-:::
-
-:::
-
-## This keeps architectures explicit and readable ... {.theme-bg3}
-
-### MNIST CNN in 20 lines w/ *scorcher*
-
-<br>
-
-::: {.columns}
-
-::: {.column width="40%"}
-
-```{r}
-#| eval: false
-#| code-line-numbers: "1|2|3-15|16-19|20"
-library(scorcher)
-dl <- scorch_create_dataloader(x_train, y_train, batch_size = 500)
-scorch_model <- initiate_scorch(dl) |>
-  scorch_input("x") |>
-  scorch_layer("conv1", conv2d, 1, 32, 3) |>
-  scorch_layer("act1",  relu) |>
-  scorch_layer("conv2", conv2d, 32, 64, 3) |>
-  scorch_layer("act2",  relu) |>
-  scorch_layer("pool1", max_pool2d, 2) |>
-  scorch_dropout("drop1", p = 0.25) |>
-  scorch_flatten("flat1") |>
-  scorch_layer("fc1", linear, 9216, 128) |>
-  scorch_layer("act3", relu) |>
-  scorch_layer("fc2", linear, 128, 10) |>
-  scorch_output("fc2") |>
-  compile_scorch(
-    loss_fn          = nn_cross_entropy_loss(),
-    optimizer_fn     = optim_adam,
-    optimizer_params = list(lr = 0.001))  |>
-  fit_scorch(num_epochs = 10, verbose = TRUE)
-```
-
-:::
-
-::: {.column .center width="60%"}
-
-![](images/mnist.png){width="100%" height="auto" fig-align="center"}
-
-* **Data:** 70k grayscale handwritten digits, from 0 to 9
-* **Goal:** Classify images into categories (0-9)
-* **Result:** Test accuracy of 98.56% after 10 epochs
-
-:::
-
-:::
-
-## ... even for complex architectures {.theme-bg3}
-
-### Example Diffusion Model w/ the Datasaurus Dozen
-
-<br>
-
-* **Task:** Generate an image of a T-Rex from random noise
-* **Result:** *Scorcher* produces model with 85% less code
-* **Benefit:** *Scorcher* code is: 
-  - Human-readable
-  - Easy to explain *and* reproduce
-  - No prior knowledge of Torch syntax
-
-::: {.absolute top="5%" left="70%"}
-
-![<span class="caption">Images and Python Code: [github.com/tanelp/tiny-diffusion](github.com/tanelp/tiny-diffusion)</span>](images/tiny-diffusion.png){width="100&" height="auto" fig-align="center"}
-
-:::
-
-# A Clinical Example {.theme-bg2}
-
-::: footer
-:::
-
-## We are piloting *scorcher* for clinical research {.theme-bg3}
-
-### Multimodal pulmonary embolism risk prediction
-
-<br>
-
-::: {.columns}
-
-::: {.column width="60%"}
 
 ::: {.fragment}
-
-* 3rd most common cause of *cardiovascular death*
-* Screening relies on *subjective* decision rules
-* *Gold standard* CTPA is expensive, involves radiation, and is not always readily available
-
+**Interpretation:** The population-standardized, covariate-balanced difference in mean telomere length between Black and White individuals
 :::
 
-:::
-
-::: {.column width="40%"}
-
-![<span class="caption">Source: https://www.myphteam.com/resources/can-pulmonary-embolism-cause-ph-lung-sounds-and-more</span>](images/pe.png){width="100%" height="auto" fig-align="center"}
-
-:::
-
-:::
-
-## Medical imaging provides a potential alternative  {.theme-bg3}
-
-### Objective, standardized, available before clinical probability is formally assessed
-
-<br>
-
-::: {.columns}
-
-::: {.column width="70%"}
-
-* Routinely obtained in the emergency department:
-    - Chest X-Rays (CXR)
-    - Electrocardiograms (EKG) 
-* Prior AI/ML work has used:
-    - EKG alone[@silva2023artificial;@wysokinski2024electrocardiogram]
-    - EKG with EHR data[@somani2022development]
-* No prior work with CXR
-
-:::
-
-::: {.column width="30%"}
-
-![<span class="caption">Source: https://jbsr.be/articles/10.5334/jbsr.3052</span>](images/cxr.png){width="100%" height="auto" fig-align="center" margin-bottom="-100px"}
-
-![<span class="caption">Source: https://epomedicine.com/emergency-medicine/ecg-changes-in-pulmonary-embolism/</span>](images/ekg.png){width="100%" height="auto" fig-align="center"}
-
-:::
-
-:::
-
-## Preliminary study using MIMIC-IV[@johnson2023author] {.theme-bg3}
-
-### 886 adult patients undergoing CTPA for PE with CXR and EKG < 48 hr before CTPA
-
-<br>
-
-* 212 PE+ (23.9%) classified by clinical review of CTPA reports
-* CXR: 1,376-dimensional embeddings from EfficientNet-L2 pre-trained on chest radiographs
-* EKG: Raw 12-lead waveform data (5,000 samples/lead, 500 Hz)
-* Stratified 70/15/15 (train/test/validation), prioritizing sensitivity for screening
-
-## Fusion CNN model {.theme-bg3}
-
-### A common model structure in biomedical applications
-
-::: {.columns}
-
-::: {.column width="50%"}
-
-<br>
-
-1. Modality-specific arms
-2. Join (concatenate) embeddings
-3. Shared subnetwork
-4. Output risk score
+## Four Proposed Estimators
 
 ::: {.fragment}
+### Inverse Probability Weighting with Factorization 1
 
-93.9% Sensitivity (Revised Geneva: 91%),[@lucassen2011clinical] 
-22.5% Specificity, 0.48 AUPRC (2x baseline)
+Use a population propensity and group-specific selection weight
 
+$$\hat\mu_{IPW1}(a) = \frac{1}{n}\sum_{i=1}^n \frac{\class{highlight-prop}{I(A_i=a)}}{\class{highlight-prop}{\hat e_a^\mathcal{P}(\boldsymbol{X}_i)}} \times \class{highlight-green}{Y_i} \times \frac{\class{highlight-selection}{\Pr(S = 1)}}{\class{highlight-selection}{\pi(A_i, \boldsymbol{X}_i)}}$$
 :::
 
+<br>
+
+::: {.fragment}
+### Inverse Probability Weighting with Factorization 2
+
+Use a within-sample propensity and marginalized selection weight
+
+$$\hat\mu_{IPW2}(a) = \frac{1}{n}\sum_{i=1}^n \frac{\class{highlight-prop}{I(A_i=a)}}{\class{highlight-prop}{\hat e_a^\mathcal{Q}(\boldsymbol{X}_i)}} \times \class{highlight-green}{Y_i} \times \frac{\class{highlight-selection}{\Pr(S = 1)}}{\class{highlight-selection}{\pi(\boldsymbol{X}_i)}}$$
+:::
+
+## Four Proposed Estimators
+
+::: {.fragment}
+### Outcome Modeling (G-Formula)
+
+Directly model $\mathbb{E}(Y \mid A, \boldsymbol{X}, S=1)$, then standardize to the population
+
+$$\hat\mu_{OM}(a) = \frac{1}{n}\sum_{i=1}^n \class{highlight-green}{\hat{g}_a(\boldsymbol{X}_i)}\times \frac{\class{highlight-selection}{\Pr(S = 1)}}{\class{highlight-selection}{\pi(\boldsymbol{X}_i)}}$$
+:::
+
+::: {.fragment}
+### AIPW / Doubly Robust
+
+Combine outcome modeling with inverse probability weighting
+
+$$\hat\mu_{AIPW}(a) = \frac{1}{n}\sum_i \frac{\class{highlight-selection}{\Pr(S = 1)}}{\class{highlight-selection}{\pi(\boldsymbol{X}_i)}}\times \left[\frac{\class{highlight-prop}{I(A_i=a)}}{\class{highlight-prop}{\hat e_a^\mathcal{Q}(\boldsymbol{X}_i)}} \class{highlight-green}{\{Y_i - \hat g_a(X_i)\}+\hat g_a(X_i)}\right]$$
+:::
+
+## How Existing Methods Compare
+
+<br>
+
+| Method | Addresses Confounding? | Addresses Selection? |
+|------------------|:-----------------:|:-----------------:|
+Existing Approaches                                 |          |     |
+Simple Regression                                   | No       | No  |
+Multiple Regression                                 | Partial  | No  |
+IPTW Estimator                                      | Yes      | No  |
+Survey-Weighted Multiple Regression                 | Partial  | Yes |
+IPTW Multiple Regression                            | Yes      | No  |
+IPTW + Survey-Weighted Multiple Regression          | Yes      | Yes |
+Weighted IPTW + Survey-Weighted Multiple Regression | Yes      | Yes |
+Proposed Approaches                                 |          |     |
+Outcome Modeling and Direct Standardization         | Yes      | Yes |
+Inverse Probability Weighting 1                     | Yes      | Yes |
+Inverse Probability Weighting 2                     | Yes      | Yes |
+Augmented Inverse Probability Weighting             | Yes      | Yes |
+
+<br>
+
+[Among existing methods that address both, there is still a possibility for bias if the weights are incorrectly specified]{.fragment}
+
+# Simulations
+
+## Simulation Setup
+
+![](images/settings_bg.png)
+
+## Simulation Results
+
+::: {.fragment}
+### Settings 1 + 3: No Bias
+
+All methods perform comparably for bias, MSE, and coverage
+:::
+
+<br>
+
+::: {.fragment}
+### Settings 2 + 4: Confounding Bias
+
+Simple regression performs poorly; methods adjusting for $A$ and $\boldsymbol{X}$ perform well
+:::
+
+<br>
+
+::: {.fragment}
+### Settings 5 + 7: Selection Bias
+
+Approaches that do not survey weight have bias and poor coverage
+:::
+
+<br>
+
+::: {.fragment}
+### Settings 6 + 8: Confounding + Selection Bias
+
+Matches our data setting; proposed estimators outperform current approaches
+:::
+
+## Simulation Takeaways
+
+<br>
+
+- Methods that address only confounding or only selection can be biased
+- Methods that ignore the clustered survey design can understate uncertainty
+- Proposed approaches best align the target, weights, and variance calculation
+
+# Race, SES, and Telomere Length
+
+## NHANES Analysis
+
+:::: {.columns}
+::: {.column width="50%"}
+### Data
+
+- NHANES 1999–2002
+- Non-Hispanic Black and White Participants
+- Analytic Sample: $n=5{,}270$
+- Outcome: log Telomere Length Ratio
 :::
 
 ::: {.column width="50%"}
+### Adjustment Set
 
-![](images/fusion.png){width="75%" height="auto" fig-align="center"}
+- Age, Sex, Blood Composition
 
+- 12 Socioeconomic Indicators: PIR, Education, Income, Home Ownership, Food Security, Insurance, WIC, Household Size, Home Type, Marital Status, Occupation, and Employment
 :::
+::::
 
-:::
+[Used `nhanesA` to extract data:]{.fragment}
 
-## Next steps {.theme-bg3}
+- [https://github.com/salernos/svycdiff/blob/master/inst/Data/DATA.R](https://github.com/salernos/svycdiff/blob/master/inst/Data/DATA.R)
+- [https://github.com/salernos/svycdiff/blob/master/inst/Data/nhanes.Rmd](https://github.com/salernos/svycdiff/blob/master/inst/Data/nhanes.Rmd)
 
-### What we're building toward:
+## Outcome and Covariate Imbalance
 
-* A more mature functional graph-based API
-* Support for chained pipelines/workflows (e.g., segmentation -> classification -> prediction)
-* Infrastructure for distributed/federated learning
-* Better evaluation helpers
-* Better interoperability with the mlverse
-* Reproducible artifacts (e.g., serialized configs/checkpoints, run logs, architecture diagrams)
-
-## Open source collaboration is the fastest path to success {.theme-bg3}
-
-### Train -> predict -> evaluate, all inside one reproducible R pipeline
-
-<br>
-
-Deep learning infrastructure improves fastest when:
-
-* APIs are shaped by real use cases
-* Features emerge from community needs
-* Bugs are found early, in diverse environments
-
-::: {.fragment} 
-**If this interests you:**
-:::
-
-* Try *scorcher* in your own research
-* Open issues and let us know your experience
-* Help us define evaluation standards
-
-:::
-
-## Thank You! {.theme-bg3}
-
-<br>
-
-::: {.columns}
-
+:::: {.columns}
 ::: {.column width="50%"}
+### Telomere Length {.fragment}
 
-**These Slides:** 
+[Median T/S Ratio:]{.fragment}
 
-[salernos.github.io/2026-enar-scorcher/](https://salernos.github.io/2026-enar-scorcher/)
-
-![](images/qr_slides.png){width="75%" height="auto" fig-align="center"}
-
+- White: 0.98
+- Black: 1.05
 :::
 
 ::: {.column width="50%"}
+### SES Imbalance {.fragment}
 
-**Scorcher Repo:** 
-
-[github.com/jtleek/scorcher](https://github.com/jtleek/scorcher)
-
-![](images/qr_github.png){width="75%" height="auto" fig-align="center"}
-
+::: {.fragment}
+![](images/smd_unweighted.png){width="80%"}
 :::
-
 :::
+::::
 
+## Results
 
-## References {.theme-bg3}
+- ACD estimates attenuate as we make appropriate adjustments for confounding and selection bias
+  - Linear regression: ACD estimate of 0.0265, 95% CI: 0.0106–0.0423
+  - Proposed approaches: 0.0132 to 0.0176, failing to detect a statistically significant difference
+- Results suggest a confounding relationship between SES and race
+- Methods incorporating the NHANES stratified, clustered design tended to have more conservative standard error estimates
+
+# Some Practical Considerations
+
+## Which Approach to Use?
 
 <br>
 
-:::{#refs}
-:::
-
-## No object-oriented programming required {.theme-bg3}
-
-### Here is an example 'simple' CNN for MNIST
-
-<br>
-
-::: {.columns}
-
-::: {.column width="40%"}
-
-```{r}
-#| eval: false
-#| code-line-numbers: "1-4|5-14|15-29|30-62"
-library(torch)
-library(torchvision)
-train_dl <- dataloader(train_ds, batch_size = 32, shuffle = TRUE)
-test_dl  <- dataloader(test_ds, batch_size = 32)
-net <- nn_module(
-  "Net",
-  initialize = function() {
-    self$conv1 <- nn_conv2d(1, 32, 3, 1)
-    self$conv2 <- nn_conv2d(32, 64, 3, 1)
-    self$dropout1 <- nn_dropout2d(0.25)
-    self$dropout2 <- nn_dropout2d(0.5)
-    self$fc1 <- nn_linear(9216, 128)
-    self$fc2 <- nn_linear(128, 10)
+```{mermaid}
+%%| fig-width: 8
+%%| fig-height: 4.5
+%%{init: {
+  'theme': 'base',
+  'flowchart': {
+    'htmlLabels': true,
+    'nodeSpacing': 18,
+    'rankSpacing': 28,
+    'curve': 'basis'
   },
-  forward = function(x) {
-    x <- self$conv1(x)
-    x <- nnf_relu(x)
-    x <- self$conv2(x)
-    x <- nnf_relu(x)
-    x <- nnf_max_pool2d(x, 2)
-    x <- self$dropout1(x)
-    x <- torch_flatten(x, start_dim = 2)
-    x <- self$fc1(x)
-    x <- nnf_relu(x)
-    x <- self$dropout2(x)
-    output <- self$fc2(x)
-    output
+  'themeVariables': {
+    'primaryColor': '#FFFFFF',
+    'primaryBorderColor': '#D3DBE4',
+    'lineColor': '#5A6673',
+    'fontFamily': 'Aptos, Arial',
+    'fontSize': '10px'
   }
-)
-model <- net()
-device <- if(cuda_is_available()) "cuda" else "cpu"
-model$to(device = device)
-optimizer <- optim_sgd(model$parameters, lr = 0.01)
-epochs <- 10
-for (epoch in 1:10) {
-  pb <- progress::progress_bar$new(
-    total = length(train_dl),
-    format = "[:bar] :eta Loss: :loss"
-  )
-  train_losses <- c()
-  test_losses <- c()
-  coro::loop(for (b in train_dl) {
-    optimizer$zero_grad()
-    output <- model(b[[1]]$to(device = device))
-    loss <- nnf_cross_entropy(output, b[[2]]$to(device = device))
-    loss$backward()
-    optimizer$step()
-    train_losses <- c(train_losses, loss$item())
-    pb$tick(tokens = list(loss = mean(train_losses)))
-  })
-  with_no_grad({
-    coro::loop(for (b in test_dl) {
-      model$eval()
-      output <- model(b[[1]]$to(device = device))
-      loss <- nnf_cross_entropy(output, b[[2]]$to(device = device))
-      test_losses <- c(test_losses, loss$item())
-      model$train()
-    })
-  })
-  cat(sprintf("Loss at epoch %d [Train: %3f] [Test: %3f]\n",
-              epoch, mean(train_losses), mean(test_losses)))
-}
+}}%%
+flowchart LR
+  Q["Define<br/>target estimand"] --> R{"Sample or<br/>population?"}
+
+  R -->|Sample| SB{"Are covariates<br/>balanced?"}
+  SB -->|Yes| SN["Estimate sample<br/>contrast"]
+  SB -->|No| SP{"Use propensity<br/>scores?"}
+  SP -->|Yes| S["Balance groups<br/>within sample"]
+  SP -->|No| SA["Use outcome model<br/>or report caveat"]
+
+  R -->|Population| T{"Does selection<br/>depend on A or X?"}
+  T -->|No / ignorable| U["Survey<br/>standardization"]
+  T -->|Yes| V["Choose OM, IPW1,<br/>IPW2, or AIPW"]
+
+  SN --> X["Variance estimation<br/>for chosen estimand"]
+  S --> X
+  SA --> X
+  U --> X
+  V --> X
+
+  classDef neutral fill:#F8FAFC,stroke:#7D8792,color:#18212B,font-size:10px;
+  classDef focus fill:#E8F0FA,stroke:#2D5F9A,color:#18212B,font-size:10px;
+  classDef caution fill:#FAECEB,stroke:#A7433B,color:#18212B,font-size:10px;
+  classDef green fill:#E8F4EF,stroke:#5D9684,color:#18212B,font-size:10px;
+
+  class Q,R,SB,SP,T,V focus;
+  class SN,S,U,X neutral;
+  class SA caution;
 ```
 
-:::
+## Planning Similar Analyses
 
-::: {.column width="60%"}
+1. Start by naming the estiman (e.g., ACD)
+2. Draw a conceptual diagram before choosing an analytic approach
+3. Diagnose covariate balance and propensity overlap
+4. Use a doubly robust estimator when both outcome and propensity models are plausible but imperfect
+5. Use variance estimation that respects the survey design
+
+## Some Conclusions
+
+- NHANES contains a wealth of data to inform policy-relevant research
+- Only valid when the estimand, adjustment strategy, and survey design are aligned
+- We propose an approach for estimating controlled outcome differences in a particular setting
+- The proposal minimizes bias and achieves correct inference compared to standard analytic methods
+- The context of racial disparities presents these challenges in a way that should be rigorously studied for best practice recommendations
+
+## Thank You!
 
 <br>
 
-This requires:
+:::: {.columns}
+::: {.column width="25%"}
+### These Slides
 
-* Defing modules and mutable objects by hand
-* Writing custom forward methods and training loops
-* Relying on PyTorch inheritance conventions
-
+![](images/qr/slides_qr.png){.r-stretch width="80%" fig-align="center"}
 :::
+::: {.column width="25%"}
+### Paper
 
+![](images/qr/paper_qr.png){.r-stretch width="80%" fig-align="center"}
 :::
+::: {.column width="25%"}
+### `svycdiff`
 
-## Fit separate CNNs on each modality {.theme-bg3}
-
-<br>
-
-::: {.columns}
-
-::: {.column width="50%"}
-
-### CXR Only
-
-::: {.fragment}
-
-* 3,590 embeddings, 8.4% prevalence
-
-* AUPRC: 0.152 (1.8x baseline)
-
-* Sensitivity: 29.0%
-
-* Specificity: 73.0%
-
+![](images/qr/svycdiff_qr.png){.r-stretch width="80%" fig-align="center"}
 :::
+::: {.column width="25%"}
+### `PSweight`
 
+![](images/qr/PSweight_qr.png){.r-stretch width="80%" fig-align="center"}
 :::
+::::
 
-::: {.column width="50%"}
+AI Attribution: All illustrations generated by GPT 5.5
 
-### EKG Only
+# Appendix
 
-::: {.fragment}
+## Inference
 
-* 2,925 records, 23.5% prevalence
+- Inference can be carried out analytically via Taylor expansion
+- Alternatively, use numerical estimation via general M-estimation theory
 
-* AUPRC: 0.392 (1.7x baseline)
+## ACD versus PATE
 
-* Sensitivity: 88.5%
+### Assumptions {.fragment}
 
-* Specificity: 20.9%
+[To estimate the ACD, we assume:]{.fragment}
 
-:::
+- **Positivity:** $P(A=a \mid X=x)>0$ for every $a$ and every $x$ with support
+- **Selection positivity:** $P(S=1 \mid A=a, X=x)>0$ for every supported $a,x$
+- **Weak selection exchangeability:** $E[Y \mid A=a, X] = E[Y \mid A=a, S=1, X]$
 
-:::
-
-:::
+[To target population potential outcome means, $E[Y^a]$, stronger assumptions are required]{.fragment}

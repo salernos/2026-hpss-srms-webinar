@@ -1,352 +1,415 @@
 /*-- scss:defaults --*/
 
-/*--- FONTS ------------------------------------------------------------------*/
+// Quarto RevealJS theme
 
-$font-family-sans-serif: "Palatino Linotype", "Book Antiqua", Palatino,
-  FreeSerif, serif !default;
+$my-blue: #003865;
+$my-light-blue: #4f7fa3;
+$my-red: #a51417;
+$my-ink: #18212b;
+$my-muted: #5f6874;
+$my-white: #ffffff;
 
-/*--- THEME COLORS -----------------------------------------------------------*/
+$body-bg: $my-white;
+$body-color: $my-ink;
+$link-color: $my-blue;
+$link-color-hover: $my-red;
+$selection-bg: rgba($my-blue, 0.12);
+$selection-color: $my-ink;
 
-$hutch-blue: #1B365D;
-$hutch-cyan: #00C1D5;
-$hutch-purp: #AA4AC4;
-$hutch-yell: #FFB500;
-$hutch-teal: #0A799A;
-$hutch-gray: #F4F4F4;
+$font-family-sans-serif: "Aptos", "Inter", "Avenir Next", "Segoe UI", Helvetica, Arial, sans-serif;
+$font-family-serif: "Source Serif 4", "IBM Plex Serif", "Iowan Old Style", Georgia, "Times New Roman", serif;
+$font-family-monospace: "JetBrains Mono", "SFMono-Regular", Consolas, "Liberation Mono", monospace;
 
-/*--- FLOW DIAGRAM -----------------------------------------------------------*/
-
-$scorch-text: #2f3b52;
-$scorch-code: #2b5c88;
-$scorch-border: #5f6f8f;
-$scorch-fill: #eef3fb;
-$scorch-gap: 1.5rem;
-
-$scorch-text-row: 2.2rem;
-$scorch-code-row: 3.2rem;
-
-/*--- TITLE SLIDE ------------------------------------------------------------*/
-
+$presentation-font-size-root: 34px;
+$presentation-line-height: 1.28;
 $presentation-title-slide-text-align: left;
+
+$presentation-heading-font: $font-family-serif;
+$presentation-heading-color: $my-blue;
+$presentation-heading-font-weight: 520;
+$presentation-heading-line-height: 1.08;
+$presentation-heading-letter-spacing: -0.02em;
+$presentation-h1-font-size: 2.08em;
+$presentation-h2-font-size: 1.50em;
+$presentation-h3-font-size: 1.12em;
+
+$code-block-bg: transparent;
+$code-block-border-color: transparent;
+$code-color: $my-blue;
+$code-bg: transparent;
 
 /*-- scss:rules --*/
 
-/*--- SLIDE THEMES -----------------------------------------------------------*/
-
-//-- TITLE SLIDE
-
-#title-slide {
-  .title {
-    color: $hutch-blue !important;
-    font-size: 1.4em !important;
-  }
-  .ubtitle {
-    color: $hutch-teal !important; 
-  }
-  .quarto-title-author-name {
-    font-size: 0.75em; 
-    margin-top: 50px;
-  }
-  .date {
-    font-size: 0.75em;
-  }
+:root {
+  --ink: #18212B;
+  --muted: #5A6673;
+  --blue: #2D5F9A;
+  --blue-light: #E8F0FA;
+  --green: #2F6F5E;
+  --green-light: #EEF6F2;
+  --red: #A7433B;
+  --red-light: #FAECEB;
+  --sand: #FBF8F3;
+  --line: #D3DBE4;
 }
 
-.reveal .slide-logo {
-  top: 25px;
-  left: 25px;
-  height: 50px !important;
-  width: auto !important;  
-  max-width: unset !important;
-  max-height: unset !important;
-  z-index: -999 !important;
+html,
+body,
+.reveal-viewport,
+.reveal,
+.reveal .backgrounds,
+.reveal .slide-background,
+.reveal .slide-background-content {
+  background-color: #ffffff !important;
+  background-image:
+    radial-gradient(circle at 0% 100%, rgba(165, 20, 23, 0.060) 0%, rgba(165, 20, 23, 0.026) 20%, rgba(165, 20, 23, 0.008) 38%, rgba(255, 255, 255, 0) 62%),
+    radial-gradient(circle at 100% 0%, rgba(0, 56, 101, 0.068) 0%, rgba(0, 56, 101, 0.028) 20%, rgba(0, 56, 101, 0.008) 40%, rgba(255, 255, 255, 0) 64%) !important;
+  background-repeat: no-repeat !important;
+  background-size: 100% 100% !important;
 }
 
-.reveal:has(.slides section#title-slide.present) .slide-logo {
-  display: block !important;
+.reveal {
+  color: $my-ink;
+  font-family: $font-family-sans-serif;
 }
 
-.reveal:has(.slides section.present:not(#title-slide)) .slide-logo {
-  display: none !important;
-}
-
-//-- CONTENT SLIDE
-
-@mixin background-half {
-  background-size: auto 50%;
-  background-position: left;
-  background-repeat: no-repeat;
-}
-
-.theme-bg3 {
-  &:is(.slide-background) {
-    background-image: url("https://salernos.github.io/2026-enar-scorcher/images/theme/bg3.png");
-    @include background-half;
-  }
-  h2 {
-    color: $hutch-blue;
-    font-size: 1.2em;
-  }
-
-  h3 {
-    color: $hutch-teal;
-    font-size: 0.8em;
-  }
-
-  h4 {
-    font-size: 1em;
-  }
-
-  h5 {
-    font-size: 0.9em;
-  }
-  p {
-    font-size: 0.7em;
-  }
-
-  h2, h3, h4, h5, p, pre {
-    margin-left: 0px;
-  }
-}
-
-//-- SECTION SLIDE
-
-h1 {
-  color: $hutch-gray !important;
-  font-size: 1.2em !important;
-}
-
-.reveal .present.hide-logo .slide-logo {
-  display: none !important;
-}
-
-@mixin background-full {
-  background-size: auto 100%;
-  background-position: left;
-  background-repeat: no-repeat;
-}
-
-.theme-bg2 {
-  &:is(.slide-background) {
-    background-image: url("https://salernos.github.io/2026-enar-scorcher/images/theme/bg2.png");
-    background-color: $hutch-cyan;
-    @include background-full;
-  }
-  .reveal section h1 {
-    color: $hutch-gray !important;
-  }
-}
-
-.reveal pre code.sourceCode {
-  font-size: 0.5em !important; 
-  max-height: 800px;
-}
-
-.reveal .cell-output-stdout code {
-  font-size: 0.5em !important;
-}
-
-.reveal code {
-  font-size: 1.2em !important;
-}
-
-/*--- CAPTIONS ---------------------------------------------------------------*/
-
-.quarto-figure {
-  margin-bottom: 0em; 
-  margin-top: 0em;
-}
-
-.caption {
-  font-size:  0.5em;
-  color:      $hutch-blue;
-  font-style: italic;
-}
-
-/*--- LIST ITEMS -------------------------------------------------------------*/
-
- .reveal ul li { 
-   font-size: 0.75em; 
-   margin-bottom: 25px !important;
- }
- 
- .reveal .slide ul li::marker {
-  content: "- ";
-  color: $hutch-blue;
-}
-
-/*--- PEOPLE -----------------------------------------------------------------*/
-
-.people-row{
-  display:flex;
-  justify-content:center;
-  gap:120px;
-  margin-top:40px;
-}
-
-.person{
-  text-align:center;
-  font-size:0.7em;
-  width:400px;
-}
-
-.headshot{
-  width:280px;
-  height:280px;
-  object-fit:cover;
-  object-position: center 20%;
-  border-radius:50%;
-  margin-bottom:15px;
-  border:4px solid $hutch-blue;
-}
-
-.person em{
-  color:#555;
-}
-
-/*--- FLOW DIAGRAM -----------------------------------------------------------*/
-
-.scorch-flow {
-  display: flex;
-  justify-content: center;
-  align-items: end;
-  gap: $scorch-gap;
-  margin-top: 2rem;
-  flex-wrap: nowrap;
-}
-
-.flow-pair,
-.flow-step {
-  display: grid;
-  grid-template-rows: $scorch-text-row $scorch-code-row;
-  align-items: center;
-  justify-items: center;
-}
-
-.flow-text {
-  height: $scorch-text-row;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.45rem;
-  font-weight: 700;
-  color: $scorch-text;
-  line-height: 1.1;
-  text-align: center;
-}
-
-.flow-code {
-  min-width: 240px;
-  height: $scorch-code-row;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0.9rem 1rem;
-  border: 2px dashed $scorch-border;
-  border-radius: 14px;
-  background: $scorch-fill;
-  font-size: 1.08rem !important;
-  font-family: var(--r-code-font, monospace);
-  color: $scorch-code;
-  line-height: 1.1;
-  box-sizing: border-box;
-  text-align: center;
-}
-
-.flow-arrow {
-  height: $scorch-code-row;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 2.2rem;
-  font-weight: 700;
-  color: $scorch-border;
-  line-height: 1;
-}
-
-.reveal .slides section .fragment {
-  transition: all 0.35s ease;
-}
-
-/*--- OOP SLIDE --------------------------------------------------------------*/
-
-$ooph-gap: 2rem;
-$ooph-code-height: 29rem;
-$ooph-text: #2f3b52;
-$ooph-muted: #5f6f8f;
-$ooph-code-bg: #f7f9fc;
-$ooph-code-border: #cfd8e6;
-
-.oop-grid {
-  display: grid;
-  grid-template-columns: 0.9fr 1.35fr;
-  column-gap: $ooph-gap;
-  row-gap: 0.7rem;
-  align-items: start;
-  margin-top: 1rem;
-}
-
-.oop-left-intro {
-  grid-column: 1;
-  font-size: 1rem;
-  line-height: 1.35;
-  color: $ooph-text;
-  margin-bottom: 0.35rem;
-}
-
-.oop-right-spacer {
-  grid-column: 2;
-}
-
-.oop-left {
-  grid-column: 1;
-  font-size: 1rem;
-  line-height: 1.3;
-  color: $ooph-text;
+.reveal .slides {
   text-align: left;
 }
 
-.oop-right {
-  grid-column: 2;
-  position: relative;
+.reveal .slides section {
+  background: transparent !important;
 }
 
-.code-swap {
-  min-height: $ooph-code-height;
+/* Remove decorative lines globally, including Reveal/Quarto heading rules. */
+.reveal *,
+.reveal *::before,
+.reveal *::after {
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+  text-decoration: none !important;
 }
 
-.code-swap pre {
-  margin: 0;
-  max-height: $ooph-code-height;
-  overflow-y: auto;
-  font-size: 0.78em;
-  line-height: 1.2;
-  background: $ooph-code-bg;
-  border: 1.5px solid $ooph-code-border;
-  border-radius: 12px;
-  padding: 0.85rem 1rem;
-  box-sizing: border-box;
+.reveal h1,
+.reveal h2,
+.reveal h3,
+.reveal h4,
+.reveal h5,
+.reveal h6,
+.reveal .slide h1,
+.reveal .slide h2,
+.reveal .slide h3,
+.reveal .slide-level1 h1,
+.reveal .slide-level2 h2,
+.reveal .slides section > h1,
+.reveal .slides section > h2,
+.reveal .slides section > h3,
+.reveal .title-slide h1,
+.reveal .quarto-title-block h1 {
+  font-family: $font-family-serif !important;
+  color: $my-blue;
+  font-weight: 520;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  text-transform: none;
+  background: transparent !important;
+  background-image: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  text-decoration: none !important;
+  padding: 0 !important;
+  margin-top: 0;
+  margin-bottom: 0.5em;
 }
 
-.code-swap code {
-  font-size: inherit;
-  line-height: inherit;
+.reveal h3,
+.reveal .slide h3,
+.reveal .slides section > h3 {
+  color: $my-light-blue !important;
 }
 
-.reveal .fragment.current-visible {
-  opacity: 0;
-  visibility: hidden;
-  display: none;
+.reveal h1::before,
+.reveal h1::after,
+.reveal h2::before,
+.reveal h2::after,
+.reveal h3::before,
+.reveal h3::after,
+.reveal h4::before,
+.reveal h4::after,
+.reveal h5::before,
+.reveal h5::after,
+.reveal h6::before,
+.reveal h6::after,
+.reveal section::before,
+.reveal section::after,
+.reveal .slide::before,
+.reveal .slide::after,
+.reveal .slide-level1::before,
+.reveal .slide-level1::after,
+.reveal .slide-level2::before,
+.reveal .slide-level2::after,
+.reveal .quarto-title-block::before,
+.reveal .quarto-title-block::after,
+.reveal .title-slide::before,
+.reveal .title-slide::after {
+  content: none !important;
+  display: none !important;
+  background: none !important;
+  border: none !important;
 }
 
-.reveal .fragment.current-visible.current-fragment {
-  opacity: 1;
-  visibility: visible;
+#title-slide .subtitle,
+.reveal .title-slide .subtitle,
+.reveal .quarto-title-block .subtitle {
+  color: $my-light-blue !important;
+}
+
+.reveal #title-slide .institute,
+.reveal #title-slide .quarto-title-affiliation {
+  color: #7a828c !important;
+  font-family: $font-family-sans-serif !important;
+  font-size: 0.58em !important;
+  font-weight: 400 !important;
+  line-height: 1.25 !important;
+}
+
+.reveal #title-slide .institute *,
+.reveal #title-slide .quarto-title-affiliation * {
+  color: inherit !important;
+  font-family: inherit !important;
+  font-size: inherit !important;
+  font-weight: inherit !important;
+  line-height: inherit !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+.reveal #title-slide .date,
+.reveal #title-slide p.date,
+.reveal #title-slide .quarto-title-meta .date,
+.reveal #title-slide .quarto-title-meta-contents {
+  color: #7a828c !important;
+  font-family: $font-family-sans-serif !important;
+  font-size: 0.52em !important;
+  font-weight: 400 !important;
+  line-height: 1.2 !important;
+}
+
+.reveal .footer {
+  color: $my-muted !important;
+  font-size: 0.75rem !important;
+}
+
+.caption{
+   text-align: center !important;
+}
+
+.collab-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.1em 1.4em;
+  align-items: start;
+  margin-top: 0.5em;
+}
+
+.collab {
+  text-align: center;
+  font-size: 0.62em;
+  color: #4a4038;
+}
+
+.collab img {
+  width: 145px;
+  height: 145px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 3px solid $my-light-blue !important;
+  box-shadow: 0 2px 8px rgba(0, 56, 101, 0.08);
+  margin-bottom: 0.45em;
+}
+
+.collab strong {
   display: block;
+  color: #2d2a26;
+  font-size: 1.05em;
 }
 
-.reveal .fragment.current-visible.visible:not(.current-fragment) {
-  opacity: 0;
-  visibility: hidden;
-  display: none;
+/* Center image figures, including when the image itself is a fragment */
+.reveal figure:has(img.centered-figure-img) {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.reveal figure:has(img.centered-figure-img) img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.reveal figure:has(img.centered-figure-img) figcaption {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  color: #4f6f85;
+  font-size: 0.72em;
+  line-height: 1.2;
+  margin-top: 1em;
+}
+
+/* Optional caption span styling */
+.reveal figure figcaption .caption {
+  font-style: italic;
+}
+
+.equation-legend {
+  display: flex;
+  gap: 1em;
+  margin-top: 0.4em;
+  font-size: 0.7em;
+}
+
+.legend-propensity,
+.legend-selection {
+  padding: 0.25em 0.55em;
+  border-radius: 6px;
+}
+
+
+/*---*/
+
+.id-formulas {
+  margin-top: 0.3em;
+}
+
+.formula-row {
+  display: grid;
+  grid-template-columns: 2.4em 1fr;
+  align-items: center;
+  margin-bottom: 0.55em;
+}
+
+.formula-num {
+  font-size: 0.85em;
+  color: #003865;
+  font-weight: 650;
+}
+
+.formula-eq {
+  font-size: 0.76em;
+}
+
+.formula-eq mjx-container {
+  margin: 0 !important;
+}
+
+/* HTML-built equation rows */
+.html-eq {
+  display: flex;
+  align-items: center;
+  gap: 0.34em;
+  flex-wrap: nowrap;
+  white-space: nowrap;
+}
+
+/* Highlight colors */
+/* Propensity score / group membership model: bluish */
+.highlight-prop {
+  background: rgba(190, 218, 242, 0.70);
+  border: 1px solid rgba(87, 137, 181, 0.85);
+  border-radius: 6px;
+}
+
+/* Selection probability / sample selection model: orangish */
+.highlight-selection {
+  background: rgba(239, 193, 169, 0.72);
+  border: 1px solid rgba(190, 96, 67, 0.85);
+  border-radius: 6px;
+}
+
+/* Telomere length / outcome model: soft green */
+.highlight-green,
+.highlight-outcome {
+  background: rgba(190, 222, 211, 0.72);
+  border: 1px solid rgba(93, 150, 132, 0.85);
+  border-radius: 6px;
+}
+
+/* SES / covariate model: soft gray-blue */
+.highlight-gray,
+.highlight-covariates {
+  background: rgba(220, 225, 225, 0.76);
+  border: 1px solid rgba(145, 155, 158, 0.85);
+  border-radius: 6px;
+}
+
+.legend {
+  margin-top: 0.8em;
+  font-size: 0.66em;
+  line-height: 1.6;
+}
+
+.legend-swatch {
+  display: inline-block;
+  width: 1.1em;
+  height: 0.8em;
+  margin-right: 0.35em;
+  vertical-align: -0.08em;
+}
+
+.legend-propensity {
+  background: rgba(190, 218, 242, 0.70);
+  border: 1px solid rgba(87, 137, 181, 0.85);
+  border-radius: 4px;
+}
+
+.legend-selection {
+  background: rgba(239, 193, 169, 0.72);
+  border: 1px solid rgba(190, 96, 67, 0.85);
+  border-radius: 4px;
+}
+
+.legend-green {
+  background: rgba(190, 222, 211, 0.72);
+  border: 1px solid rgba(93, 150, 132, 0.85);
+  border-radius: 4px;
+}
+
+.legend-gray {
+  background: rgba(220, 225, 225, 0.76);
+  border: 1px solid rgba(145, 155, 158, 0.85);
+  border-radius: 4px;
+}
+
+.math-highlight {
+  background-color: #fff3cd; /* Light yellow background */
+  border: 2px solid #ffc107; /* Orange border */
+  border-radius: 4px;
+  padding: 2px 4px;
+}
+
+.big-arrow {
+  font-size: 3.2em;
+  color: var(--my-blue);
+  text-align: center;
+  margin-top: 1.1em;
+}
+
+.question {
+  background: var(--sand);
+  border-radius: 18px;
+  padding: 0.8em 0.95em;
+  color: #2A2C31;
+  margin-top: 0.8em;
+}
+
+/* Decrease table font size to fit more data on a slide */
+.reveal table {
+  font-size: 0.65em;
+}
+
+/* Alternate row colors for readability */
+.reveal table tbody tr:nth-child(even) {
+  background-color: rgba(0, 0, 0, 0.05);
 }
