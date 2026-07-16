@@ -303,8 +303,8 @@ University of Michigan</p>
 <li class="fragment"><span class="math inline">\(\class{highlight-gray}{\ \boldsymbol{X}\ }\)</span>: Covariates (SES)</li>
 <li class="fragment"><span class="math inline">\(\class{highlight-green}{\ Y\ }\)</span>: Outcome (log Telomere Length)</li>
 <li class="fragment"><span class="math inline">\(\class{highlight-selection}{\ S\ }\)</span>: Sample Selection Indicator</li>
-<li class="fragment"><span class="math inline">\(\mathcal{P}\)</span>: Population distribution of <span class="math inline">\((\class{highlight-prop}{A},\ \class{highlight-gray}{\boldsymbol{X}},\ \class{highlight-green}{Y})\)</span></li>
-<li class="fragment"><span class="math inline">\(\mathcal{Q}\)</span>: Sample distribution given <span class="math inline">\(\class{highlight-selection}{S = 1}\)</span></li>
+<li class="fragment"><span class="math inline">\(P\)</span>: Population distribution of <span class="math inline">\((\class{highlight-prop}{A},\ \class{highlight-gray}{\boldsymbol{X}},\ \class{highlight-green}{Y})\)</span></li>
+<li class="fragment"><span class="math inline">\(Q\)</span>: Sample distribution given <span class="math inline">\(\class{highlight-selection}{S = 1}\)</span></li>
 </ul>
 </div><div class="column" style="width:50%;">
 <div class="quarto-figure quarto-figure-center">
@@ -327,7 +327,7 @@ University of Michigan</p>
 </div><div class="column" style="width:50%;">
 <h3 class="fragment" id="population-generalizability">Population Generalizability</h3>
 <p><span class="fragment">Use the selection mechanism (e.g., survey weights):</span></p>
-<p><span class="fragment"><span class="math display">\[\class{highlight-selection}{\pi(A, \boldsymbol{X})} = \Pr(\class{highlight-selection}{S=1} \mid \class{highlight-prop}{A},\ \class{highlight-gray}{\boldsymbol{X}})\]</span></span></p>
+<p><span class="fragment"><span class="math display">\[\class{highlight-selection}{\pi(A, \boldsymbol{X})} = \Pr(\class{highlight-selection}{S=1} \mid\ \class{highlight-prop}{A},\ \class{highlight-gray}{\boldsymbol{X}})\]</span></span></p>
 <p><span class="fragment"><strong>Purpose:</strong> Weight the sample to the target population.</span></p>
 </div></div>
 </section>
@@ -347,12 +347,12 @@ University of Michigan</p>
 <div class="columns">
 <div class="fragment column" style="width:50%;">
 <h3 id="factorization-1">Factorization 1</h3>
-<p><span class="math display">\[\Pr(\class{highlight-prop}{A=a} \mid\ \class{highlight-gray}{\boldsymbol{X}}) \times \Pr(\class{highlight-selection}{S=1} \mid\ \class{highlight-prop}{A=a},\ \class{highlight-gray}{\boldsymbol{X}})\]</span> <span class="math display">\[= \class{highlight-prop}{e_a^{\mathcal{P}}(\boldsymbol{X})}  \times \class{highlight-selection}{\pi(A, \boldsymbol{X})}\]</span></p>
+<p><span class="math display">\[\Pr(\class{highlight-prop}{A=a} \mid\ \class{highlight-gray}{\boldsymbol{X}}) \times \Pr(\class{highlight-selection}{S=1} \mid\ \class{highlight-prop}{A=a},\ \class{highlight-gray}{\boldsymbol{X}})\]</span> <span class="math display">\[=\ \class{highlight-prop}{e_a^{P}(\boldsymbol{X})} \times\ \class{highlight-selection}{\pi(A, \boldsymbol{X})}\]</span></p>
 <p>Population (Survey-Weighted) Propensity Score <span class="math inline">\(\times\)</span> Group-Specific Selection Probability</p>
 </div><div class="fragment column" style="width:50%;">
 <h3 id="factorization-2">Factorization 2</h3>
 <p><span class="math display">\[\Pr(\class{highlight-prop}{A=a} \mid\ \class{highlight-gray}{\boldsymbol{X}},\ \class{highlight-selection}{S=1}) \times \Pr(\class{highlight-selection}{S=1} \mid\ \class{highlight-gray}{\boldsymbol{X}})\]</span></p>
-<p><span class="math display">\[= \class{highlight-prop}{e_a^{\mathcal{Q}}(\boldsymbol{X})}  \times \class{highlight-selection}{\pi(\boldsymbol{X})}\]</span></p>
+<p><span class="math display">\[=\ \class{highlight-prop}{e_a^{Q}(\boldsymbol{X})} \times\ \class{highlight-selection}{\pi(\boldsymbol{X})}\]</span></p>
 <p>Within-Sample Propensity Score <span class="math inline">\(\times\)</span> Marginalized Selection Probability</p>
 </div></div>
 </section></section>
@@ -367,8 +367,8 @@ University of Michigan</p>
 <p><br></p>
 <div class="fragment">
 <p>For group level <span class="math inline">\(a \in \{0,1\}\)</span>:</p>
-<p><span class="math display">\[\mu(a) = \mathbb{E}_{\mathcal{P}}\left[\mathbb{E}(\class{highlight-green}{Y} \mid\ \class{highlight-prop}{A = a},\ \class{highlight-gray}{\boldsymbol{X}})\right] = \mathbb{E}_{\mathcal{Q}}\left[\class{highlight-green}{g_a(\boldsymbol{X})}\ \class{highlight-selection}{w(\boldsymbol{X})}\right],\]</span></p>
-<p>where <span class="math inline">\(\class{highlight-green}{g_a(\boldsymbol{X})} = \mathbb{E}_{\mathcal{Q}}(\class{highlight-green}{Y} \mid\ \class{highlight-prop}{A = a},\ \class{highlight-gray}{\boldsymbol{X}})\)</span> and <span class="math inline">\(\class{highlight-selection}{w(\boldsymbol{X})}\)</span> is a known selection factor, we have <span class="math display">\[\text{ACD} = \mu(1) - \mu(0)\]</span></p>
+<p><span class="math display">\[\mu(a) = \mathbb{E}_{P}\left[\mathbb{E}(\class{highlight-green}{Y} \mid\ \class{highlight-prop}{A = a},\ \class{highlight-gray}{\boldsymbol{X}})\right] = \mathbb{E}_{Q}\left[\class{highlight-green}{g_a(\boldsymbol{X})}\ \class{highlight-selection}{w(\boldsymbol{X})}\right],\]</span></p>
+<p>where <span class="math inline">\(\class{highlight-green}{g_a(\boldsymbol{X})} = \mathbb{E}_{Q}(\class{highlight-green}{Y} \mid\ \class{highlight-prop}{A = a},\ \class{highlight-gray}{\boldsymbol{X}})\)</span> and <span class="math inline">\(\class{highlight-selection}{w(\boldsymbol{X})}\)</span> is a known selection factor, we have <span class="math display">\[\text{ACD} = \mu(1) - \mu(0)\]</span></p>
 </div>
 <p><br></p>
 <div class="fragment">
@@ -380,13 +380,13 @@ University of Michigan</p>
 <div class="fragment">
 <h3 id="inverse-probability-weighting-with-factorization-1">Inverse Probability Weighting with Factorization 1</h3>
 <p>Use a population propensity and group-specific selection weight</p>
-<p><span class="math display">\[\hat\mu_{IPW1}(a) = \frac{1}{n}\sum_{i=1}^n \frac{\class{highlight-prop}{I(A_i=a)}}{\class{highlight-prop}{\hat e_a^\mathcal{P}(\boldsymbol{X}_i)}} \times \class{highlight-green}{Y_i} \times \frac{\class{highlight-selection}{\Pr(S = 1)}}{\class{highlight-selection}{\pi(A_i, \boldsymbol{X}_i)}}\]</span></p>
+<p><span class="math display">\[\hat\mu_{IPW1}(a) = \frac{1}{n}\sum_{i=1}^n \frac{\class{highlight-prop}{I(A_i=a)}}{\class{highlight-prop}{\hat e_a^P(\boldsymbol{X}_i)}} \times\ \class{highlight-green}{Y_i} \times \frac{\class{highlight-selection}{\Pr(S = 1)}}{\class{highlight-selection}{\pi(A_i, \boldsymbol{X}_i)}}\]</span></p>
 </div>
 <p><br></p>
 <div class="fragment">
 <h3 id="inverse-probability-weighting-with-factorization-2">Inverse Probability Weighting with Factorization 2</h3>
 <p>Use a within-sample propensity and marginalized selection weight</p>
-<p><span class="math display">\[\hat\mu_{IPW2}(a) = \frac{1}{n}\sum_{i=1}^n \frac{\class{highlight-prop}{I(A_i=a)}}{\class{highlight-prop}{\hat e_a^\mathcal{Q}(\boldsymbol{X}_i)}} \times \class{highlight-green}{Y_i} \times \frac{\class{highlight-selection}{\Pr(S = 1)}}{\class{highlight-selection}{\pi(\boldsymbol{X}_i)}}\]</span></p>
+<p><span class="math display">\[\hat\mu_{IPW2}(a) = \frac{1}{n}\sum_{i=1}^n \frac{\class{highlight-prop}{I(A_i=a)}}{\class{highlight-prop}{\hat e_a^Q(\boldsymbol{X}_i)}} \times\ \class{highlight-green}{Y_i} \times \frac{\class{highlight-selection}{\Pr(S = 1)}}{\class{highlight-selection}{\pi(\boldsymbol{X}_i)}}\]</span></p>
 </div>
 </section>
 <section id="four-proposed-estimators-1" class="slide level2">
@@ -399,12 +399,11 @@ University of Michigan</p>
 <div class="fragment">
 <h3 id="aipw-doubly-robust">AIPW / Doubly Robust</h3>
 <p>Combine outcome modeling with inverse probability weighting</p>
-<p><span class="math display">\[\hat\mu_{AIPW}(a) = \frac{1}{n}\sum_i \frac{\class{highlight-selection}{\Pr(S = 1)}}{\class{highlight-selection}{\pi(\boldsymbol{X}_i)}}\times \left[\frac{\class{highlight-prop}{I(A_i=a)}}{\class{highlight-prop}{\hat e_a^\mathcal{Q}(\boldsymbol{X}_i)}} \class{highlight-green}{\{Y_i - \hat g_a(X_i)\}+\hat g_a(X_i)}\right]\]</span></p>
+<p><span class="math display">\[\hat\mu_{AIPW}(a) = \frac{1}{n}\sum_i \frac{\class{highlight-selection}{\Pr(S = 1)}}{\class{highlight-selection}{\pi(\boldsymbol{X}_i)}}\times \left[\frac{\class{highlight-prop}{I(A_i=a)}}{\class{highlight-prop}{\hat e_a^Q(\boldsymbol{X}_i)}} \class{highlight-green}{\{Y_i - \hat g_a(X_i)\}+\hat g_a(X_i)}\right]\]</span></p>
 </div>
 </section>
 <section id="how-existing-methods-compare" class="slide level2">
 <h2>How Existing Methods Compare</h2>
-<p><br></p>
 <table class="caption-top">
 <thead>
 <tr class="header">
@@ -648,7 +647,7 @@ flowchart LR
 <section id="planning-similar-analyses" class="slide level2">
 <h2>Planning Similar Analyses</h2>
 <ol type="1">
-<li class="fragment">Start by naming the estiman (e.g., ACD)</li>
+<li class="fragment">Start by naming the estimand (e.g., ACD)</li>
 <li class="fragment">Draw a conceptual diagram before choosing an analytic approach</li>
 <li class="fragment">Diagnose covariate balance and propensity overlap</li>
 <li class="fragment">Use a doubly robust estimator when both outcome and propensity models are plausible but imperfect</li>
