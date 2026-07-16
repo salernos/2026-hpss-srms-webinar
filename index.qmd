@@ -264,7 +264,7 @@ $$\text{ACD} = \mu(1) - \mu(0)$$
 
 Use a population propensity and group-specific selection weight
 
-$$\hat\mu_{IPW1}(a) = \frac{1}{n}\sum_{i=1}^n \frac{\class{highlight-prop}{I(A_i=a)}}{\class{highlight-prop}{\hat e_a^P(\boldsymbol{X}_i)}} \times\ \class{highlight-green}{Y_i} \times \frac{\class{highlight-selection}{\Pr(S = 1)}}{\class{highlight-selection}{\pi(A_i, \boldsymbol{X}_i)}}$$
+$$\hat{\mu}_{IPW1}(a) = \frac{1}{n}\sum_{i=1}^n \frac{\class{highlight-prop}{I(A_i=a)}}{\class{highlight-prop}{\hat{e}_a^P(\boldsymbol{X}_i)}} \times\ \class{highlight-green}{Y_i} \times \frac{\class{highlight-selection}{\Pr(S = 1)}}{\class{highlight-selection}{\pi(A_i, \boldsymbol{X}_i)}}$$
 :::
 
 <br>
@@ -274,7 +274,7 @@ $$\hat\mu_{IPW1}(a) = \frac{1}{n}\sum_{i=1}^n \frac{\class{highlight-prop}{I(A_i
 
 Use a within-sample propensity and marginalized selection weight
 
-$$\hat\mu_{IPW2}(a) = \frac{1}{n}\sum_{i=1}^n \frac{\class{highlight-prop}{I(A_i=a)}}{\class{highlight-prop}{\hat e_a^Q(\boldsymbol{X}_i)}} \times\ \class{highlight-green}{Y_i} \times \frac{\class{highlight-selection}{\Pr(S = 1)}}{\class{highlight-selection}{\pi(\boldsymbol{X}_i)}}$$
+$$\hat{\mu}_{IPW2}(a) = \frac{1}{n}\sum_{i=1}^n \frac{\class{highlight-prop}{I(A_i=a)}}{\class{highlight-prop}{\hat{e}_a^Q(\boldsymbol{X}_i)}} \times\ \class{highlight-green}{Y_i} \times \frac{\class{highlight-selection}{\Pr(S = 1)}}{\class{highlight-selection}{\pi(\boldsymbol{X}_i)}}$$
 :::
 
 ## Four Proposed Estimators
@@ -292,14 +292,14 @@ $$\hat\mu_{OM}(a) = \frac{1}{n}\sum_{i=1}^n \class{highlight-green}{\hat{g}_a(\b
 
 Combine outcome modeling with inverse probability weighting
 
-$$\hat\mu_{AIPW}(a) = \frac{1}{n}\sum_i \frac{\class{highlight-selection}{\Pr(S = 1)}}{\class{highlight-selection}{\pi(\boldsymbol{X}_i)}}\times \left[\frac{\class{highlight-prop}{I(A_i=a)}}{\class{highlight-prop}{\hat e_a^Q(\boldsymbol{X}_i)}} \class{highlight-green}{\{Y_i - \hat g_a(X_i)\}+\hat g_a(X_i)}\right]$$
+$$\hat{\mu}_{AIPW}(a) = \frac{1}{n}\sum_i \frac{\class{highlight-selection}{\Pr(S = 1)}}{\class{highlight-selection}{\pi(\boldsymbol{X}_i)}}\times \left[\frac{\class{highlight-prop}{I(A_i=a)}}{\class{highlight-prop}{\hat{e}_a^Q(\boldsymbol{X}_i)}} \class{highlight-green}{\{Y_i - \hat g_a(X_i)\}+\hat{g}_a(X_i)}\right]$$
 :::
 
 ## How Existing Methods Compare
 
 | Method | Addresses Confounding? | Addresses Selection? |
 |------------------|:-----------------:|:-----------------:|
-Existing Approaches                                 |          |     |
+**Existing Approaches**                             |          |     |
 Simple Regression                                   | No       | No  |
 Multiple Regression                                 | Partial  | No  |
 IPTW Estimator                                      | Yes      | No  |
@@ -307,13 +307,11 @@ Survey-Weighted Multiple Regression                 | Partial  | Yes |
 IPTW Multiple Regression                            | Yes      | No  |
 IPTW + Survey-Weighted Multiple Regression          | Yes      | Yes |
 Weighted IPTW + Survey-Weighted Multiple Regression | Yes      | Yes |
-Proposed Approaches                                 |          |     |
+**Proposed Approaches**                             |          |     |
 Outcome Modeling and Direct Standardization         | Yes      | Yes |
 Inverse Probability Weighting 1                     | Yes      | Yes |
 Inverse Probability Weighting 2                     | Yes      | Yes |
 Augmented Inverse Probability Weighting             | Yes      | Yes |
-
-<br>
 
 [Among existing methods that address both, there is still a possibility for bias if the weights are incorrectly specified]{.fragment}
 

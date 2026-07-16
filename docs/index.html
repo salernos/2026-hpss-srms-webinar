@@ -380,13 +380,13 @@ University of Michigan</p>
 <div class="fragment">
 <h3 id="inverse-probability-weighting-with-factorization-1">Inverse Probability Weighting with Factorization 1</h3>
 <p>Use a population propensity and group-specific selection weight</p>
-<p><span class="math display">\[\hat\mu_{IPW1}(a) = \frac{1}{n}\sum_{i=1}^n \frac{\class{highlight-prop}{I(A_i=a)}}{\class{highlight-prop}{\hat e_a^P(\boldsymbol{X}_i)}} \times\ \class{highlight-green}{Y_i} \times \frac{\class{highlight-selection}{\Pr(S = 1)}}{\class{highlight-selection}{\pi(A_i, \boldsymbol{X}_i)}}\]</span></p>
+<p><span class="math display">\[\hat{\mu}_{IPW1}(a) = \frac{1}{n}\sum_{i=1}^n \frac{\class{highlight-prop}{I(A_i=a)}}{\class{highlight-prop}{\hat{e}_a^P(\boldsymbol{X}_i)}} \times\ \class{highlight-green}{Y_i} \times \frac{\class{highlight-selection}{\Pr(S = 1)}}{\class{highlight-selection}{\pi(A_i, \boldsymbol{X}_i)}}\]</span></p>
 </div>
 <p><br></p>
 <div class="fragment">
 <h3 id="inverse-probability-weighting-with-factorization-2">Inverse Probability Weighting with Factorization 2</h3>
 <p>Use a within-sample propensity and marginalized selection weight</p>
-<p><span class="math display">\[\hat\mu_{IPW2}(a) = \frac{1}{n}\sum_{i=1}^n \frac{\class{highlight-prop}{I(A_i=a)}}{\class{highlight-prop}{\hat e_a^Q(\boldsymbol{X}_i)}} \times\ \class{highlight-green}{Y_i} \times \frac{\class{highlight-selection}{\Pr(S = 1)}}{\class{highlight-selection}{\pi(\boldsymbol{X}_i)}}\]</span></p>
+<p><span class="math display">\[\hat{\mu}_{IPW2}(a) = \frac{1}{n}\sum_{i=1}^n \frac{\class{highlight-prop}{I(A_i=a)}}{\class{highlight-prop}{\hat{e}_a^Q(\boldsymbol{X}_i)}} \times\ \class{highlight-green}{Y_i} \times \frac{\class{highlight-selection}{\Pr(S = 1)}}{\class{highlight-selection}{\pi(\boldsymbol{X}_i)}}\]</span></p>
 </div>
 </section>
 <section id="four-proposed-estimators-1" class="slide level2">
@@ -399,7 +399,7 @@ University of Michigan</p>
 <div class="fragment">
 <h3 id="aipw-doubly-robust">AIPW / Doubly Robust</h3>
 <p>Combine outcome modeling with inverse probability weighting</p>
-<p><span class="math display">\[\hat\mu_{AIPW}(a) = \frac{1}{n}\sum_i \frac{\class{highlight-selection}{\Pr(S = 1)}}{\class{highlight-selection}{\pi(\boldsymbol{X}_i)}}\times \left[\frac{\class{highlight-prop}{I(A_i=a)}}{\class{highlight-prop}{\hat e_a^Q(\boldsymbol{X}_i)}} \class{highlight-green}{\{Y_i - \hat g_a(X_i)\}+\hat g_a(X_i)}\right]\]</span></p>
+<p><span class="math display">\[\hat{\mu}_{AIPW}(a) = \frac{1}{n}\sum_i \frac{\class{highlight-selection}{\Pr(S = 1)}}{\class{highlight-selection}{\pi(\boldsymbol{X}_i)}}\times \left[\frac{\class{highlight-prop}{I(A_i=a)}}{\class{highlight-prop}{\hat{e}_a^Q(\boldsymbol{X}_i)}} \class{highlight-green}{\{Y_i - \hat g_a(X_i)\}+\hat{g}_a(X_i)}\right]\]</span></p>
 </div>
 </section>
 <section id="how-existing-methods-compare" class="slide level2">
@@ -414,7 +414,7 @@ University of Michigan</p>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Existing Approaches</td>
+<td><strong>Existing Approaches</strong></td>
 <td style="text-align: center;"></td>
 <td style="text-align: center;"></td>
 </tr>
@@ -454,7 +454,7 @@ University of Michigan</p>
 <td style="text-align: center;">Yes</td>
 </tr>
 <tr class="odd">
-<td>Proposed Approaches</td>
+<td><strong>Proposed Approaches</strong></td>
 <td style="text-align: center;"></td>
 <td style="text-align: center;"></td>
 </tr>
@@ -480,7 +480,6 @@ University of Michigan</p>
 </tr>
 </tbody>
 </table>
-<p><br></p>
 <p><span class="fragment">Among existing methods that address both, there is still a possibility for bias if the weights are incorrectly specified</span></p>
 </section></section>
 <section>
