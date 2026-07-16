@@ -160,8 +160,8 @@ University of Michigan
 - $\class{highlight-gray}{\ \boldsymbol{X}\ }$: Covariates (SES)
 - $\class{highlight-green}{\ Y\ }$: Outcome (log Telomere Length)
 - $\class{highlight-selection}{\ S\ }$: Sample Selection Indicator
-- $\mathcal{P}$: Population distribution of $(\class{highlight-prop}{A},\ \class{highlight-gray}{\boldsymbol{X}},\ \class{highlight-green}{Y})$
-- $\mathcal{Q}$: Sample distribution given $\class{highlight-selection}{S = 1}$
+- $P$: Population distribution of $(\class{highlight-prop}{A},\ \class{highlight-gray}{\boldsymbol{X}},\ \class{highlight-green}{Y})$
+- $Q$: Sample distribution given $\class{highlight-selection}{S = 1}$
 
 :::
 
@@ -192,7 +192,7 @@ University of Michigan
 
 [Use the selection mechanism (e.g., survey weights):]{.fragment}
 
-[$$\class{highlight-selection}{\pi(A, \boldsymbol{X})} = \Pr(\class{highlight-selection}{S=1} \mid \class{highlight-prop}{A},\ \class{highlight-gray}{\boldsymbol{X}})$$]{.fragment}
+[$$\class{highlight-selection}{\pi(A, \boldsymbol{X})} = \Pr(\class{highlight-selection}{S=1} \mid\ \class{highlight-prop}{A},\ \class{highlight-gray}{\boldsymbol{X}})$$]{.fragment}
 
 [**Purpose:** Weight the sample to the target population.]{.fragment}
 :::
@@ -218,7 +218,7 @@ University of Michigan
 ### Factorization 1
 
 $$\Pr(\class{highlight-prop}{A=a} \mid\ \class{highlight-gray}{\boldsymbol{X}}) \times \Pr(\class{highlight-selection}{S=1} \mid\ \class{highlight-prop}{A=a},\ \class{highlight-gray}{\boldsymbol{X}})$$
-$$= \class{highlight-prop}{e_a^{\mathcal{P}}(\boldsymbol{X})}  \times \class{highlight-selection}{\pi(A, \boldsymbol{X})}$$
+$$=\ \class{highlight-prop}{e_a^{P}(\boldsymbol{X})} \times\ \class{highlight-selection}{\pi(A, \boldsymbol{X})}$$
 
 Population (Survey-Weighted) Propensity Score $\times$ Group-Specific Selection Probability
 :::
@@ -228,7 +228,7 @@ Population (Survey-Weighted) Propensity Score $\times$ Group-Specific Selection 
 
 $$\Pr(\class{highlight-prop}{A=a} \mid\ \class{highlight-gray}{\boldsymbol{X}},\ \class{highlight-selection}{S=1}) \times \Pr(\class{highlight-selection}{S=1} \mid\ \class{highlight-gray}{\boldsymbol{X}})$$
 
-$$= \class{highlight-prop}{e_a^{\mathcal{Q}}(\boldsymbol{X})}  \times \class{highlight-selection}{\pi(\boldsymbol{X})}$$
+$$=\ \class{highlight-prop}{e_a^{Q}(\boldsymbol{X})} \times\ \class{highlight-selection}{\pi(\boldsymbol{X})}$$
 
 Within-Sample Propensity Score $\times$ Marginalized Selection Probability
 :::
@@ -245,9 +245,9 @@ Within-Sample Propensity Score $\times$ Marginalized Selection Probability
 ::: {.fragment}
 For group level $a \in \{0,1\}$:
 
-$$\mu(a) = \mathbb{E}_{\mathcal{P}}\left[\mathbb{E}(\class{highlight-green}{Y} \mid\ \class{highlight-prop}{A = a},\ \class{highlight-gray}{\boldsymbol{X}})\right] = \mathbb{E}_{\mathcal{Q}}\left[\class{highlight-green}{g_a(\boldsymbol{X})}\ \class{highlight-selection}{w(\boldsymbol{X})}\right],$$
+$$\mu(a) = \mathbb{E}_{P}\left[\mathbb{E}(\class{highlight-green}{Y} \mid\ \class{highlight-prop}{A = a},\ \class{highlight-gray}{\boldsymbol{X}})\right] = \mathbb{E}_{Q}\left[\class{highlight-green}{g_a(\boldsymbol{X})}\ \class{highlight-selection}{w(\boldsymbol{X})}\right],$$
 
-where $\class{highlight-green}{g_a(\boldsymbol{X})} = \mathbb{E}_{\mathcal{Q}}(\class{highlight-green}{Y} \mid\ \class{highlight-prop}{A = a},\ \class{highlight-gray}{\boldsymbol{X}})$ and $\class{highlight-selection}{w(\boldsymbol{X})}$ is a known selection factor, we have
+where $\class{highlight-green}{g_a(\boldsymbol{X})} = \mathbb{E}_{Q}(\class{highlight-green}{Y} \mid\ \class{highlight-prop}{A = a},\ \class{highlight-gray}{\boldsymbol{X}})$ and $\class{highlight-selection}{w(\boldsymbol{X})}$ is a known selection factor, we have
 $$\text{ACD} = \mu(1) - \mu(0)$$
 :::
 
@@ -264,7 +264,7 @@ $$\text{ACD} = \mu(1) - \mu(0)$$
 
 Use a population propensity and group-specific selection weight
 
-$$\hat\mu_{IPW1}(a) = \frac{1}{n}\sum_{i=1}^n \frac{\class{highlight-prop}{I(A_i=a)}}{\class{highlight-prop}{\hat e_a^\mathcal{P}(\boldsymbol{X}_i)}} \times \class{highlight-green}{Y_i} \times \frac{\class{highlight-selection}{\Pr(S = 1)}}{\class{highlight-selection}{\pi(A_i, \boldsymbol{X}_i)}}$$
+$$\hat\mu_{IPW1}(a) = \frac{1}{n}\sum_{i=1}^n \frac{\class{highlight-prop}{I(A_i=a)}}{\class{highlight-prop}{\hat e_a^P(\boldsymbol{X}_i)}} \times\ \class{highlight-green}{Y_i} \times \frac{\class{highlight-selection}{\Pr(S = 1)}}{\class{highlight-selection}{\pi(A_i, \boldsymbol{X}_i)}}$$
 :::
 
 <br>
@@ -274,7 +274,7 @@ $$\hat\mu_{IPW1}(a) = \frac{1}{n}\sum_{i=1}^n \frac{\class{highlight-prop}{I(A_i
 
 Use a within-sample propensity and marginalized selection weight
 
-$$\hat\mu_{IPW2}(a) = \frac{1}{n}\sum_{i=1}^n \frac{\class{highlight-prop}{I(A_i=a)}}{\class{highlight-prop}{\hat e_a^\mathcal{Q}(\boldsymbol{X}_i)}} \times \class{highlight-green}{Y_i} \times \frac{\class{highlight-selection}{\Pr(S = 1)}}{\class{highlight-selection}{\pi(\boldsymbol{X}_i)}}$$
+$$\hat\mu_{IPW2}(a) = \frac{1}{n}\sum_{i=1}^n \frac{\class{highlight-prop}{I(A_i=a)}}{\class{highlight-prop}{\hat e_a^Q(\boldsymbol{X}_i)}} \times\ \class{highlight-green}{Y_i} \times \frac{\class{highlight-selection}{\Pr(S = 1)}}{\class{highlight-selection}{\pi(\boldsymbol{X}_i)}}$$
 :::
 
 ## Four Proposed Estimators
@@ -292,12 +292,10 @@ $$\hat\mu_{OM}(a) = \frac{1}{n}\sum_{i=1}^n \class{highlight-green}{\hat{g}_a(\b
 
 Combine outcome modeling with inverse probability weighting
 
-$$\hat\mu_{AIPW}(a) = \frac{1}{n}\sum_i \frac{\class{highlight-selection}{\Pr(S = 1)}}{\class{highlight-selection}{\pi(\boldsymbol{X}_i)}}\times \left[\frac{\class{highlight-prop}{I(A_i=a)}}{\class{highlight-prop}{\hat e_a^\mathcal{Q}(\boldsymbol{X}_i)}} \class{highlight-green}{\{Y_i - \hat g_a(X_i)\}+\hat g_a(X_i)}\right]$$
+$$\hat\mu_{AIPW}(a) = \frac{1}{n}\sum_i \frac{\class{highlight-selection}{\Pr(S = 1)}}{\class{highlight-selection}{\pi(\boldsymbol{X}_i)}}\times \left[\frac{\class{highlight-prop}{I(A_i=a)}}{\class{highlight-prop}{\hat e_a^Q(\boldsymbol{X}_i)}} \class{highlight-green}{\{Y_i - \hat g_a(X_i)\}+\hat g_a(X_i)}\right]$$
 :::
 
 ## How Existing Methods Compare
-
-<br>
 
 | Method | Addresses Confounding? | Addresses Selection? |
 |------------------|:-----------------:|:-----------------:|
@@ -478,7 +476,7 @@ flowchart LR
 
 ## Planning Similar Analyses
 
-1. Start by naming the estiman (e.g., ACD)
+1. Start by naming the estimand (e.g., ACD)
 2. Draw a conceptual diagram before choosing an analytic approach
 3. Diagnose covariate balance and propensity overlap
 4. Use a doubly robust estimator when both outcome and propensity models are plausible but imperfect
