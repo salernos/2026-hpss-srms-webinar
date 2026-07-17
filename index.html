@@ -191,7 +191,7 @@ University of Michigan</p>
 </section>
 <section id="what-are-telomeres" class="slide level2">
 <h2>What are Telomeres?</h2>
-<h3 class="fragment" id="regions-of-dna-on-chromosomes-that-guard-against-cell-death">Regions of DNA on chromosomes that guard against cell death</h3>
+<h3 class="fragment" id="regions-of-dna-on-chromosomes-that-protect-genomic-stability">Regions of DNA on chromosomes that protect genomic stability</h3>
 <div class="fragment">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -203,7 +203,7 @@ University of Michigan</p>
 </section>
 <section id="telomeres-shorten-as-cells-divide" class="slide level2">
 <h2>Telomeres Shorten As Cells Divide</h2>
-<h3 class="fragment" id="shortening-associated-with-cardiometabolic-outcomes">Shortening associated with cardiometabolic outcomes</h3>
+<h3 class="fragment" id="shorter-length-associated-with-cardiometabolic-outcomes">Shorter length associated with cardiometabolic outcomes</h3>
 <div class="fragment">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -244,7 +244,7 @@ University of Michigan</p>
 <p><span class="fragment">With balanced socioeconomic factors and a nationally representative sample, would the difference remain?</span></p>
 </div></div>
 <p><br></p>
-<p><span class="fragment"><strong>Note:</strong> Race is not ‘manipulable’ like a traditional treatment/exposure</span></p>
+<p><span class="fragment"><strong>Note:</strong> This is not a causal effect as race is not ‘manipulable.’ This is a controlled comparison after balancing socioeconomic conditions.</span></p>
 </section>
 <section id="motivating-question" class="slide level2 center">
 <h2>Motivating Question</h2>
@@ -367,12 +367,11 @@ University of Michigan</p>
 <p><br></p>
 <div class="fragment">
 <p>For group level <span class="math inline">\(a \in \{0,1\}\)</span>:</p>
-<p><span class="math display">\[\mu(a) = \mathbb{E}_{P}\left[\mathbb{E}(\class{highlight-green}{Y} \mid\ \class{highlight-prop}{A = a},\ \class{highlight-gray}{\boldsymbol{X}})\right] = \mathbb{E}_{Q}\left[\class{highlight-green}{g_a(\boldsymbol{X})}\ \class{highlight-selection}{w(\boldsymbol{X})}\right],\]</span></p>
-<p>where <span class="math inline">\(\class{highlight-green}{g_a(\boldsymbol{X})} = \mathbb{E}_{Q}(\class{highlight-green}{Y} \mid\ \class{highlight-prop}{A = a},\ \class{highlight-gray}{\boldsymbol{X}})\)</span> and <span class="math inline">\(\class{highlight-selection}{w(\boldsymbol{X})}\)</span> is a known selection factor, we have <span class="math display">\[\text{ACD} = \mu(1) - \mu(0)\]</span></p>
+<p><span class="math display">\[\mu(a) = \mathbb{E}_{P}\left[\mathbb{E}(\class{highlight-green}{Y} \mid\ \class{highlight-prop}{A = a},\ \class{highlight-gray}{\boldsymbol{X}})\right]\]</span></p>
 </div>
-<p><br></p>
 <div class="fragment">
-<p><strong>Interpretation:</strong> The population-standardized, covariate-balanced difference in mean telomere length between Black and White individuals</p>
+<p>The population-standardized, covariate-balanced difference in mean telomere length between Black and White individuals</p>
+<p><span class="math display">\[\text{ACD} = \mu(1) - \mu(0)\]</span></p>
 </div>
 </section>
 <section id="four-proposed-estimators" class="slide level2">
@@ -401,15 +400,20 @@ University of Michigan</p>
 <p>Combine outcome modeling with inverse probability weighting</p>
 <p><span class="math display">\[\hat{\mu}_{AIPW}(a) = \frac{1}{n}\sum_i \frac{\class{highlight-selection}{\Pr(S = 1)}}{\class{highlight-selection}{\pi(\boldsymbol{X}_i)}}\times \left[\frac{\class{highlight-prop}{I(A_i=a)}}{\class{highlight-prop}{\hat{e}_a^Q(\boldsymbol{X}_i)}} \class{highlight-green}{\{Y_i - \hat g_a(X_i)\}+\hat{g}_a(X_i)}\right]\]</span></p>
 </div>
+</section></section>
+<section>
+<section id="simulations" class="title-slide slide level1 center">
+<h1>Simulations</h1>
+
 </section>
-<section id="how-existing-methods-compare" class="slide level2">
-<h2>How Existing Methods Compare</h2>
+<section id="how-do-existing-methods-compare" class="slide level2">
+<h2>How do Existing Methods Compare?</h2>
 <table class="caption-top">
 <thead>
 <tr class="header">
 <th>Method</th>
-<th style="text-align: center;">Addresses Confounding?</th>
-<th style="text-align: center;">Addresses Selection?</th>
+<th style="text-align: center;">Addressing Confounding?</th>
+<th style="text-align: center;">Addressing Selection?</th>
 </tr>
 </thead>
 <tbody>
@@ -481,37 +485,16 @@ University of Michigan</p>
 </tbody>
 </table>
 <p><span class="fragment">Among existing methods that address both, there is still a possibility for bias if the weights are incorrectly specified</span></p>
-</section></section>
-<section>
-<section id="simulations" class="title-slide slide level1 center">
-<h1>Simulations</h1>
-
 </section>
-<section id="simulation-setup" class="slide level2">
-<h2>Simulation Setup</h2>
-
-<img data-src="images/settings_bg.png" class="r-stretch"></section>
 <section id="simulation-results" class="slide level2">
 <h2>Simulation Results</h2>
-<div class="fragment">
-<h3 id="settings-1-3-no-bias">Settings 1 + 3: No Bias</h3>
-<p>All methods perform comparably for bias, MSE, and coverage</p>
-</div>
-<p><br></p>
-<div class="fragment">
-<h3 id="settings-2-4-confounding-bias">Settings 2 + 4: Confounding Bias</h3>
-<p>Simple regression performs poorly; methods adjusting for <span class="math inline">\(A\)</span> and <span class="math inline">\(\boldsymbol{X}\)</span> perform well</p>
-</div>
-<p><br></p>
-<div class="fragment">
-<h3 id="settings-5-7-selection-bias">Settings 5 + 7: Selection Bias</h3>
-<p>Approaches that do not survey weight have bias and poor coverage</p>
-</div>
-<p><br></p>
-<div class="fragment">
-<h3 id="settings-6-8-confounding-selection-bias">Settings 6 + 8: Confounding + Selection Bias</h3>
-<p>Matches our data setting; proposed estimators outperform current approaches</p>
-</div>
+
+<img data-src="images/original/settings.png" class="quarto-figure quarto-figure-center r-stretch" style="width:50.0%"><ul>
+<li class="fragment"><strong>Settings 1 + 3:</strong> All methods perform comparably for bias, MSE, and coverage</li>
+<li class="fragment"><strong>Settings 2 + 4:</strong> Methods that appropriately adjust for <span class="math inline">\(A\)</span> and <span class="math inline">\(\boldsymbol{X}\)</span> perform well</li>
+<li class="fragment"><strong>Settings 5 + 7:</strong> Not survey weighting results in bias and poor coverage</li>
+<li class="fragment"><strong>Settings 6 + 8:</strong> Proposed estimators outperform current approaches</li>
+</ul>
 </section>
 <section id="simulation-takeaways" class="slide level2">
 <h2>Simulation Takeaways</h2>
@@ -568,16 +551,16 @@ University of Michigan</p>
 </div>
 </div></div>
 </section>
-<section id="results" class="slide level2">
-<h2>Results</h2>
+<section id="estimated-disparity-attenuates-after-accounting-for-ses-and-survey-design" class="slide level2">
+<h2>Estimated Disparity Attenuates After Accounting for SES and Survey Design</h2>
 <ul>
-<li class="fragment">ACD estimates attenuate as we make appropriate adjustments for confounding and selection bias
+<li class="fragment">Estimates attenuate as we make appropriate adjustments for sources of bias
 <ul>
 <li class="fragment">Linear regression: ACD estimate of 0.0265, 95% CI: 0.0106–0.0423</li>
-<li class="fragment">Proposed approaches: 0.0132 to 0.0176, failing to detect a statistically significant difference</li>
+<li class="fragment">Proposed approaches: 0.0132 to 0.0176, CI’s cover 0</li>
 </ul></li>
 <li class="fragment">Results suggest a confounding relationship between SES and race</li>
-<li class="fragment">Methods incorporating the NHANES stratified, clustered design tended to have more conservative standard error estimates</li>
+<li class="fragment">Methods respecting design have appropriate standard errors</li>
 </ul>
 </section></section>
 <section>
@@ -587,8 +570,7 @@ University of Michigan</p>
 </section>
 <section id="which-approach-to-use" class="slide level2">
 <h2>Which Approach to Use?</h2>
-<p><br></p>
-<div class="cell" data-reveal="true" data-fig-width="8" data-fig-height="4.5" data-layout-align="default">
+<div class="cell" data-reveal="true" data-fig-width="7.8" data-fig-height="4" data-layout-align="default">
 <div class="cell-output-display">
 <div>
 <p></p><figure class=""><p></p>
@@ -597,8 +579,8 @@ University of Michigan</p>
   'theme': 'base',
   'flowchart': {
     'htmlLabels': true,
-    'nodeSpacing': 18,
-    'rankSpacing': 28,
+    'nodeSpacing': 22,
+    'rankSpacing': 32,
     'curve': 'basis'
   },
   'themeVariables': {
@@ -610,32 +592,33 @@ University of Michigan</p>
   }
 }}%%
 flowchart LR
-  Q["Define&lt;br/&gt;target estimand"] --&gt; R{"Sample or&lt;br/&gt;population?"}
+  Q["Define&lt;br/&gt;target question"] --&gt; R{"Sample or&lt;br/&gt;population?"}
 
-  R --&gt;|Sample| SB{"Are covariates&lt;br/&gt;balanced?"}
-  SB --&gt;|Yes| SN["Estimate sample&lt;br/&gt;contrast"]
-  SB --&gt;|No| SP{"Use propensity&lt;br/&gt;scores?"}
-  SP --&gt;|Yes| S["Balance groups&lt;br/&gt;within sample"]
-  SP --&gt;|No| SA["Use outcome model&lt;br/&gt;or report caveat"]
+  R --&gt;|Sample| S{"Control / balance&lt;br/&gt;for SES?"}
+  R --&gt;|Population| P{"Control / balance&lt;br/&gt;for SES?"}
 
-  R --&gt;|Population| T{"Does selection&lt;br/&gt;depend on A or X?"}
-  T --&gt;|No / ignorable| U["Survey&lt;br/&gt;standardization"]
-  T --&gt;|Yes| V["Choose OM, IPW1,&lt;br/&gt;IPW2, or AIPW"]
+  S --&gt;|No| S0["Sample descriptive&lt;br/&gt;comparison"]
+  S --&gt;|Yes| S1["Sample controlled&lt;br/&gt;comparison&lt;br/&gt;&lt;span style='font-size:8px'&gt;Outcome model or IPTW&lt;/span&gt;"]
 
-  SN --&gt; X["Variance estimation&lt;br/&gt;for chosen estimand"]
-  S --&gt; X
-  SA --&gt; X
-  U --&gt; X
-  V --&gt; X
+  P --&gt;|No| P0["Population descriptive&lt;br/&gt;comparison&lt;br/&gt;&lt;span style='font-size:8px'&gt;Survey-weighted analysis&lt;/span&gt;"]
+  P --&gt;|Yes| PA{"Does selection&lt;br/&gt;depend on group membership?"}
+
+  PA --&gt;|No| P1["Population controlled&lt;br/&gt;comparison&lt;br/&gt;&lt;span style='font-size:8px'&gt;IPTW × survey weights&lt;/span&gt;"]
+  PA --&gt;|Yes| P2["Population controlled&lt;br/&gt;comparison&lt;br/&gt;&lt;span style='font-size:8px'&gt;Proposed OM, IPW1,&lt;br/&gt;IPW2, or AIPW&lt;/span&gt;"]
+
+  S0 --&gt; X["Variance estimation&lt;br/&gt;for chosen estimand"]
+  S1 --&gt; X
+  P0 --&gt; X
+  P1 --&gt; X
+  P2 --&gt; X
 
   classDef neutral fill:#F8FAFC,stroke:#7D8792,color:#18212B,font-size:10px;
   classDef focus fill:#E8F0FA,stroke:#2D5F9A,color:#18212B,font-size:10px;
-  classDef caution fill:#FAECEB,stroke:#A7433B,color:#18212B,font-size:10px;
-  classDef green fill:#E8F4EF,stroke:#5D9684,color:#18212B,font-size:10px;
+  classDef main fill:#E8F4EF,stroke:#5D9684,color:#18212B,font-size:10px;
 
-  class Q,R,SB,SP,T,V focus;
-  class SN,S,U,X neutral;
-  class SA caution;
+  class Q,R,S,P,PA focus;
+  class S0,S1,P0,P1,X neutral;
+  class P2 main;
 </pre>
 </div>
 <p></p></figure><p></p>
@@ -656,11 +639,14 @@ flowchart LR
 <section id="some-conclusions" class="slide level2">
 <h2>Some Conclusions</h2>
 <ul>
-<li class="fragment">NHANES contains a wealth of data to inform policy-relevant research</li>
-<li class="fragment">Only valid when the estimand, adjustment strategy, and survey design are aligned</li>
-<li class="fragment">We propose an approach for estimating controlled outcome differences in a particular setting</li>
-<li class="fragment">The proposal minimizes bias and achieves correct inference compared to standard analytic methods</li>
-<li class="fragment">The context of racial disparities presents these challenges in a way that should be rigorously studied for best practice recommendations</li>
+<li class="fragment"><p>For controlled comparisons, different weights play different roles:</p>
+<ul>
+<li class="fragment">Survey weights support <strong>generalizability</strong></li>
+<li class="fragment">Propensity scores support <strong>covariate balance</strong></li>
+</ul></li>
+<li class="fragment"><p>When race, SES, and selection are intertwined, standard approaches might not be appropriate</p></li>
+<li class="fragment"><p><strong>NHANES is a uniquely valuable resource</strong> for policy-relevant disparities research because it combines national representativeness, rich socioeconomic measures, and biological outcomes</p></li>
+<li class="fragment"><p>But valid inference requires aligning the <strong>target estimand</strong>, <strong>adjustment strategy</strong>, and <strong>experimental design</strong>!</p></li>
 </ul>
 </section>
 <section id="thank-you" class="slide level2">
