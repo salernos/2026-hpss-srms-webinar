@@ -74,13 +74,13 @@ University of Michigan
 
 ## What are Telomeres?
 
-### Regions of DNA on chromosomes that guard against cell death {.fragment}
+### Regions of DNA on chromosomes that protect genomic stability {.fragment}
 
 ![[Like the protective "caps" on the ends of shoelaces]{.caption}](images/shoelace_bg.png){.fragment .centered-figure-img width="70%" fig-align="center"}
 
 ## Telomeres Shorten As Cells Divide
 
-### Shortening associated with cardiometabolic outcomes {.fragment}
+### Shorter length associated with cardiometabolic outcomes {.fragment}
 
 ![[Affected by age, sex, race/ethnicity, genetics, SES, environment, psychosocial stress, ...]{.caption}](images/telomeres2_bg.png){.fragment .centered-figure-img width="70%" fig-align="center"}
 
@@ -116,7 +116,7 @@ University of Michigan
 
 <br>
 
-[**Note:** Race is not 'manipulable' like a traditional treatment/exposure]{.fragment}
+[**Note:** This is not a causal effect as race is not 'manipulable.' This is a controlled comparison after balancing socioeconomic conditions.]{.fragment}
 
 ## Motivating Question {.center}
 
@@ -245,16 +245,13 @@ Within-Sample Propensity Score $\times$ Marginalized Selection Probability
 ::: {.fragment}
 For group level $a \in \{0,1\}$:
 
-$$\mu(a) = \mathbb{E}_{P}\left[\mathbb{E}(\class{highlight-green}{Y} \mid\ \class{highlight-prop}{A = a},\ \class{highlight-gray}{\boldsymbol{X}})\right] = \mathbb{E}_{Q}\left[\class{highlight-green}{g_a(\boldsymbol{X})}\ \class{highlight-selection}{w(\boldsymbol{X})}\right],$$
-
-where $\class{highlight-green}{g_a(\boldsymbol{X})} = \mathbb{E}_{Q}(\class{highlight-green}{Y} \mid\ \class{highlight-prop}{A = a},\ \class{highlight-gray}{\boldsymbol{X}})$ and $\class{highlight-selection}{w(\boldsymbol{X})}$ is a known selection factor, we have
-$$\text{ACD} = \mu(1) - \mu(0)$$
+$$\mu(a) = \mathbb{E}_{P}\left[\mathbb{E}(\class{highlight-green}{Y} \mid\ \class{highlight-prop}{A = a},\ \class{highlight-gray}{\boldsymbol{X}})\right]$$
 :::
 
-<br>
-
 ::: {.fragment}
-**Interpretation:** The population-standardized, covariate-balanced difference in mean telomere length between Black and White individuals
+The population-standardized, covariate-balanced difference in mean telomere length between Black and White individuals
+
+$$\text{ACD} = \mu(1) - \mu(0)$$
 :::
 
 ## Four Proposed Estimators
@@ -295,9 +292,11 @@ Combine outcome modeling with inverse probability weighting
 $$\hat{\mu}_{AIPW}(a) = \frac{1}{n}\sum_i \frac{\class{highlight-selection}{\Pr(S = 1)}}{\class{highlight-selection}{\pi(\boldsymbol{X}_i)}}\times \left[\frac{\class{highlight-prop}{I(A_i=a)}}{\class{highlight-prop}{\hat{e}_a^Q(\boldsymbol{X}_i)}} \class{highlight-green}{\{Y_i - \hat g_a(X_i)\}+\hat{g}_a(X_i)}\right]$$
 :::
 
-## How Existing Methods Compare
+# Simulations
 
-| Method | Addresses Confounding? | Addresses Selection? |
+## How do Existing Methods Compare?
+
+| Method | Addressing Confounding? | Addressing Selection? |
 |------------------|:-----------------:|:-----------------:|
 **Existing Approaches**                             |          |     |
 Simple Regression                                   | No       | No  |
@@ -315,43 +314,14 @@ Augmented Inverse Probability Weighting             | Yes      | Yes |
 
 [Among existing methods that address both, there is still a possibility for bias if the weights are incorrectly specified]{.fragment}
 
-# Simulations
-
-## Simulation Setup
-
-![](images/settings_bg.png)
-
 ## Simulation Results
 
-::: {.fragment}
-### Settings 1 + 3: No Bias
+![](images/original/settings.png){width="50%" fig-align="center"}
 
-All methods perform comparably for bias, MSE, and coverage
-:::
-
-<br>
-
-::: {.fragment}
-### Settings 2 + 4: Confounding Bias
-
-Simple regression performs poorly; methods adjusting for $A$ and $\boldsymbol{X}$ perform well
-:::
-
-<br>
-
-::: {.fragment}
-### Settings 5 + 7: Selection Bias
-
-Approaches that do not survey weight have bias and poor coverage
-:::
-
-<br>
-
-::: {.fragment}
-### Settings 6 + 8: Confounding + Selection Bias
-
-Matches our data setting; proposed estimators outperform current approaches
-:::
+- **Settings 1 + 3:** All methods perform comparably for bias, MSE, and coverage
+- **Settings 2 + 4:** Methods that appropriately adjust for $A$ and $\boldsymbol{X}$ perform well
+- **Settings 5 + 7:** Not survey weighting results in bias and poor coverage
+- **Settings 6 + 8:** Proposed estimators outperform current approaches
 
 ## Simulation Takeaways
 
@@ -410,29 +380,27 @@ Matches our data setting; proposed estimators outperform current approaches
 :::
 ::::
 
-## Results
+## Estimated Disparity Attenuates After Accounting for SES and Survey Design
 
-- ACD estimates attenuate as we make appropriate adjustments for confounding and selection bias
+- Estimates attenuate as we make appropriate adjustments for sources of bias
   - Linear regression: ACD estimate of 0.0265, 95% CI: 0.0106–0.0423
-  - Proposed approaches: 0.0132 to 0.0176, failing to detect a statistically significant difference
+  - Proposed approaches: 0.0132 to 0.0176, CI's cover 0
 - Results suggest a confounding relationship between SES and race
-- Methods incorporating the NHANES stratified, clustered design tended to have more conservative standard error estimates
+- Methods respecting design have appropriate standard errors
 
 # Some Practical Considerations
 
 ## Which Approach to Use?
 
-<br>
-
 ```{mermaid}
-%%| fig-width: 8
-%%| fig-height: 4.5
+%%| fig-width: 7.8
+%%| fig-height: 4.0
 %%{init: {
   'theme': 'base',
   'flowchart': {
     'htmlLabels': true,
-    'nodeSpacing': 18,
-    'rankSpacing': 28,
+    'nodeSpacing': 22,
+    'rankSpacing': 32,
     'curve': 'basis'
   },
   'themeVariables': {
@@ -444,32 +412,33 @@ Matches our data setting; proposed estimators outperform current approaches
   }
 }}%%
 flowchart LR
-  Q["Define<br/>target estimand"] --> R{"Sample or<br/>population?"}
+  Q["Define<br/>target question"] --> R{"Sample or<br/>population?"}
 
-  R -->|Sample| SB{"Are covariates<br/>balanced?"}
-  SB -->|Yes| SN["Estimate sample<br/>contrast"]
-  SB -->|No| SP{"Use propensity<br/>scores?"}
-  SP -->|Yes| S["Balance groups<br/>within sample"]
-  SP -->|No| SA["Use outcome model<br/>or report caveat"]
+  R -->|Sample| S{"Control / balance<br/>for SES?"}
+  R -->|Population| P{"Control / balance<br/>for SES?"}
 
-  R -->|Population| T{"Does selection<br/>depend on A or X?"}
-  T -->|No / ignorable| U["Survey<br/>standardization"]
-  T -->|Yes| V["Choose OM, IPW1,<br/>IPW2, or AIPW"]
+  S -->|No| S0["Sample descriptive<br/>comparison"]
+  S -->|Yes| S1["Sample controlled<br/>comparison<br/><span style='font-size:8px'>Outcome model or IPTW</span>"]
 
-  SN --> X["Variance estimation<br/>for chosen estimand"]
-  S --> X
-  SA --> X
-  U --> X
-  V --> X
+  P -->|No| P0["Population descriptive<br/>comparison<br/><span style='font-size:8px'>Survey-weighted analysis</span>"]
+  P -->|Yes| PA{"Does selection<br/>depend on group membership?"}
+
+  PA -->|No| P1["Population controlled<br/>comparison<br/><span style='font-size:8px'>IPTW × survey weights</span>"]
+  PA -->|Yes| P2["Population controlled<br/>comparison<br/><span style='font-size:8px'>Proposed OM, IPW1,<br/>IPW2, or AIPW</span>"]
+
+  S0 --> X["Variance estimation<br/>for chosen estimand"]
+  S1 --> X
+  P0 --> X
+  P1 --> X
+  P2 --> X
 
   classDef neutral fill:#F8FAFC,stroke:#7D8792,color:#18212B,font-size:10px;
   classDef focus fill:#E8F0FA,stroke:#2D5F9A,color:#18212B,font-size:10px;
-  classDef caution fill:#FAECEB,stroke:#A7433B,color:#18212B,font-size:10px;
-  classDef green fill:#E8F4EF,stroke:#5D9684,color:#18212B,font-size:10px;
+  classDef main fill:#E8F4EF,stroke:#5D9684,color:#18212B,font-size:10px;
 
-  class Q,R,SB,SP,T,V focus;
-  class SN,S,U,X neutral;
-  class SA caution;
+  class Q,R,S,P,PA focus;
+  class S0,S1,P0,P1,X neutral;
+  class P2 main;
 ```
 
 ## Planning Similar Analyses
@@ -482,11 +451,15 @@ flowchart LR
 
 ## Some Conclusions
 
-- NHANES contains a wealth of data to inform policy-relevant research
-- Only valid when the estimand, adjustment strategy, and survey design are aligned
-- We propose an approach for estimating controlled outcome differences in a particular setting
-- The proposal minimizes bias and achieves correct inference compared to standard analytic methods
-- The context of racial disparities presents these challenges in a way that should be rigorously studied for best practice recommendations
+- For controlled comparisons, different weights play different roles:
+  - Survey weights support **generalizability**
+  - Propensity scores support **covariate balance**
+
+- When race, SES, and selection are intertwined, standard approaches might not be appropriate
+
+- **NHANES is a uniquely valuable resource** for policy-relevant disparities research because it combines national representativeness, rich socioeconomic measures, and biological outcomes
+
+- But valid inference requires aligning the **target estimand**, **adjustment strategy**, and **experimental design**!
 
 ## Thank You!
 
